@@ -35,7 +35,7 @@ print(tasks_string)
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mAuthenticationError[0m                       Traceback (most recent call last)
-[0;32m/tmp/ipykernel_1744/715097078.py[0m in [0;36m<module>[0;34m[0m
+[0;32m/tmp/ipykernel_1735/715097078.py[0m in [0;36m<module>[0;34m[0m
 [1;32m      6[0m   [0mmodel[0m[0;34m=[0m[0;34m"gpt-3.5-turbo"[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
 [1;32m      7[0m   messages=[
 [0;32m----> 8[0;31m     [0;34m{[0m[0;34m"role"[0m[0;34m:[0m [0;34m"user"[0m[0;34m,[0m [0;34m"content"[0m[0;34m:[0m [0mprompt[0m[0;34m}[0m[0;34m[0m[0;34m[0m[0m
