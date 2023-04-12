@@ -5,10 +5,10 @@ title: Jupyter Book Demo
 author: Dan Kwiatkowski
 # logo: logo.png
 
-# Force re-execution of notebooks on each build.
+# Execute files that are missing at least one output
 # See https://jupyterbook.org/content/execute.html
 execute:
-  execute_notebooks: force
+  execute_notebooks: auto
 
 # Define the name of the latex output file for PDF builds
 latex:
