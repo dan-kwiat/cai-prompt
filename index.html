@@ -402,19 +402,28 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Failed</span> <span class="n">to</span> <span class="n">start</span> <span class="n">the</span> <span class="n">Kernel</span><span class="o">.</span> 
+
+<span class="n">Python</span> <span class="n">extension</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">exporting</span> <span class="n">the</span> <span class="n">jupyter</span> <span class="n">API</span><span class="o">.</span> 
+
+<span class="n">View</span> <span class="n">Jupyter</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;command:jupyter.viewOutput&#39;</span><span class="o">&gt;</span><span class="n">log</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">further</span> <span class="n">details</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
 </div>
 <section id="generate-tasks">
 <h2>Generate tasks<a class="headerlink" href="#generate-tasks" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Generate a list of </span><span class="si">{</span><span class="n">number_prompts</span><span class="si">}</span><span class="s2"> tasks for a customer service assistant involving reading and writing. Write each task on a separate line and number each task.&quot;</span>
-
-<span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">)</span>
 
 <span class="n">completion</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">ChatCompletion</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
   <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">,</span>
   <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
-    <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">prompt</span><span class="p">}</span>
+    <span class="p">{</span>
+  <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Generate a list of </span><span class="si">{</span><span class="n">number_prompts</span><span class="si">}</span><span class="s2"> tasks for a customer service assistant involving reading and writing. Write each task on a separate line and number each task.&quot;</span><span class="p">}</span>
   <span class="p">]</span>
 <span class="p">)</span>
 
@@ -424,50 +433,17 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">AuthenticationError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1743</span><span class="o">/</span><span class="mf">715097078.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span>   <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span>   <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
-<span class="ne">----&gt; </span><span class="mi">8</span>     <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">prompt</span><span class="p">}</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span>   <span class="p">]</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="p">)</span>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Jupyter</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">started</span><span class="o">.</span> <span class="n">Error</span> <span class="n">attempting</span> <span class="n">to</span> <span class="n">locate</span> <span class="n">Jupyter</span><span class="p">:</span> <span class="n">Select</span> <span class="n">an</span> <span class="n">Interpreter</span> <span class="n">to</span> <span class="n">start</span> <span class="n">Jupyter</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.7.16/x64/lib/python3.7/site-packages/openai/api_resources/chat_completion.py</span> in <span class="ni">create</span><span class="nt">(cls, *args, **kwargs)</span>
-<span class="g g-Whitespace">     </span><span class="mi">23</span>         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span>             <span class="k">try</span><span class="p">:</span>
-<span class="ne">---&gt; </span><span class="mi">25</span>                 <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">26</span>             <span class="k">except</span> <span class="n">TryAgain</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">27</span>                 <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">start</span> <span class="o">+</span> <span class="n">timeout</span><span class="p">:</span>
+<span class="n">Run</span> <span class="n">the</span> <span class="n">following</span> <span class="n">command</span> <span class="n">to</span> <span class="n">install</span> <span class="s1">&#39;jupyter and notebook&#39;</span> <span class="n">into</span> <span class="n">the</span> <span class="n">Python</span> <span class="n">environment</span><span class="o">.</span> 
 
-<span class="nn">/opt/hostedtoolcache/Python/3.7.16/x64/lib/python3.7/site-packages/openai/api_resources/abstract/engine_api_resource.py</span> in <span class="ni">create</span><span class="nt">(cls, api_key, api_base, api_type, request_id, api_version, organization, **params)</span>
-<span class="g g-Whitespace">    </span><span class="mi">148</span>             <span class="n">params</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">149</span>         <span class="p">)</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__prepare_create_request</span><span class="p">(</span>
-<span class="ne">--&gt; </span><span class="mi">150</span>             <span class="n">api_key</span><span class="p">,</span> <span class="n">api_base</span><span class="p">,</span> <span class="n">api_type</span><span class="p">,</span> <span class="n">api_version</span><span class="p">,</span> <span class="n">organization</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span>
-<span class="g g-Whitespace">    </span><span class="mi">151</span>         <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">152</span> 
+<span class="ne">Command</span>: &#39;python -m pip install jupyter notebook -U
 
-<span class="nn">/opt/hostedtoolcache/Python/3.7.16/x64/lib/python3.7/site-packages/openai/api_resources/abstract/engine_api_resource.py</span> in <span class="ni">__prepare_create_request</span><span class="nt">(cls, api_key, api_base, api_type, api_version, organization, **params)</span>
-<span class="g g-Whitespace">    </span><span class="mi">109</span>             <span class="n">api_type</span><span class="o">=</span><span class="n">api_type</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">110</span>             <span class="n">api_version</span><span class="o">=</span><span class="n">api_version</span><span class="p">,</span>
-<span class="ne">--&gt; </span><span class="mi">111</span>             <span class="n">organization</span><span class="o">=</span><span class="n">organization</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">112</span>         <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">113</span>         <span class="n">url</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">class_url</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">api_type</span><span class="p">,</span> <span class="n">api_version</span><span class="p">)</span>
+<span class="ow">or</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.7.16/x64/lib/python3.7/site-packages/openai/api_requestor.py</span> in <span class="ni">__init__</span><span class="nt">(self, key, api_base, api_type, api_version, organization)</span>
-<span class="g g-Whitespace">    </span><span class="mi">128</span>     <span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">129</span>         <span class="bp">self</span><span class="o">.</span><span class="n">api_base</span> <span class="o">=</span> <span class="n">api_base</span> <span class="ow">or</span> <span class="n">openai</span><span class="o">.</span><span class="n">api_base</span>
-<span class="ne">--&gt; </span><span class="mi">130</span>         <span class="bp">self</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">key</span> <span class="ow">or</span> <span class="n">util</span><span class="o">.</span><span class="n">default_api_key</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">131</span>         <span class="bp">self</span><span class="o">.</span><span class="n">api_type</span> <span class="o">=</span> <span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">132</span>             <span class="n">ApiType</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="n">api_type</span><span class="p">)</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">jupyter</span> <span class="n">notebook</span> <span class="o">-</span><span class="sa">U</span><span class="s1">&#39;</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.7.16/x64/lib/python3.7/site-packages/openai/util.py</span> in <span class="ni">default_api_key</span><span class="nt">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">185</span>     <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">186</span>         <span class="k">raise</span> <span class="n">openai</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">AuthenticationError</span><span class="p">(</span>
-<span class="ne">--&gt; </span><span class="mi">187</span>             <span class="s2">&quot;No API key provided. You can set your API key in code using &#39;openai.api_key = &lt;API-KEY&gt;&#39;, or you can set the environment variable OPENAI_API_KEY=&lt;API-KEY&gt;). If your API key is stored in a file, you can point the openai module at it with &#39;openai.api_key_path = &lt;PATH&gt;&#39;. You can generate API keys in the OpenAI web interface. See https://onboard.openai.com for details, or email support@openai.com if you have any questions.&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">188</span>         <span class="p">)</span>
-
-<span class="ne">AuthenticationError</span>: No API key provided. You can set your API key in code using &#39;openai.api_key = &lt;API-KEY&gt;&#39;, or you can set the environment variable OPENAI_API_KEY=&lt;API-KEY&gt;). If your API key is stored in a file, you can point the openai module at it with &#39;openai.api_key_path = &lt;PATH&gt;&#39;. You can generate API keys in the OpenAI web interface. See https://onboard.openai.com for details, or email support@openai.com if you have any questions.
+<span class="n">Click</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;https://aka.ms/installJupyterForVSCode&#39;</span><span class="o">&gt;</span><span class="n">here</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">more</span> <span class="n">info</span><span class="o">.</span>
 </pre></div>
 </div>
 </div>
@@ -486,7 +462,17 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Jupyter</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">started</span><span class="o">.</span> <span class="n">Error</span> <span class="n">attempting</span> <span class="n">to</span> <span class="n">locate</span> <span class="n">Jupyter</span><span class="p">:</span> <span class="n">Select</span> <span class="n">an</span> <span class="n">Interpreter</span> <span class="n">to</span> <span class="n">start</span> <span class="n">Jupyter</span>
+
+<span class="n">Run</span> <span class="n">the</span> <span class="n">following</span> <span class="n">command</span> <span class="n">to</span> <span class="n">install</span> <span class="s1">&#39;jupyter and notebook&#39;</span> <span class="n">into</span> <span class="n">the</span> <span class="n">Python</span> <span class="n">environment</span><span class="o">.</span> 
+
+<span class="ne">Command</span>: &#39;python -m pip install jupyter notebook -U
+
+<span class="ow">or</span>
+
+<span class="n">conda</span> <span class="n">install</span> <span class="n">jupyter</span> <span class="n">notebook</span> <span class="o">-</span><span class="sa">U</span><span class="s1">&#39;</span>
+
+<span class="n">Click</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;https://aka.ms/installJupyterForVSCode&#39;</span><span class="o">&gt;</span><span class="n">here</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">more</span> <span class="n">info</span><span class="o">.</span>
 </pre></div>
 </div>
 </div>
@@ -525,48 +511,17 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Response 3 received
-Response 1 received
-Response 4 received
-Response 0 received
-Response 2 received
-TASK:
-Responding to customer inquiries via email or chat by reading and writing clear, helpful messages.
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Jupyter</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">started</span><span class="o">.</span> <span class="n">Error</span> <span class="n">attempting</span> <span class="n">to</span> <span class="n">locate</span> <span class="n">Jupyter</span><span class="p">:</span> <span class="n">Select</span> <span class="n">an</span> <span class="n">Interpreter</span> <span class="n">to</span> <span class="n">start</span> <span class="n">Jupyter</span>
 
-NAIVE PROMPT:
-Please generate responses to customer inquiries via email or chat that are clear, helpful, and informative. The responses should address the customer&#39;s questions or concerns and provide solutions or next steps as necessary. Please ensure that the language used is professional and courteous, with a focus on providing excellent customer service.
+<span class="n">Run</span> <span class="n">the</span> <span class="n">following</span> <span class="n">command</span> <span class="n">to</span> <span class="n">install</span> <span class="s1">&#39;jupyter and notebook&#39;</span> <span class="n">into</span> <span class="n">the</span> <span class="n">Python</span> <span class="n">environment</span><span class="o">.</span> 
 
----
+<span class="ne">Command</span>: &#39;python -m pip install jupyter notebook -U
 
-TASK:
-Taking notes during customer calls and summarizing the key points in writing for follow-up.
+<span class="ow">or</span>
 
-NAIVE PROMPT:
-&quot;Please generate a summary of the key points discussed during customer calls and provide a written record for follow-up. Your notes should accurately capture the customer&#39;s concerns, questions, and any solutions or next steps discussed during the call.&quot;
+<span class="n">conda</span> <span class="n">install</span> <span class="n">jupyter</span> <span class="n">notebook</span> <span class="o">-</span><span class="sa">U</span><span class="s1">&#39;</span>
 
----
-
-TASK:
-Creating and updating customer service documentation, such as FAQs or instructional guides, that require researching and writing accurate information.
-
-NAIVE PROMPT:
-Please generate customer service documentation, such as FAQs and instructional guides, that are accurate and informative. The documentation should cover common customer inquiries and issues, and should be updated regularly to ensure its relevance. Please conduct thorough research to ensure that the information provided is accurate and up-to-date. Thank you.
-
----
-
-TASK:
-Editing and proofreading customer-facing materials (e.g., website copy, newsletters) to ensure they are clear, concise, and error-free.
-
-NAIVE PROMPT:
-Please edit and proofread customer-facing materials such as website copy and newsletters to ensure they are clear, concise, and free of errors.
-
----
-
-TASK:
-Drafting and sending follow-up surveys to customers after interactions with the company, analyzing the data received, and conveying insights in writing to the customer service team.
-
-NAIVE PROMPT:
-Please draft a follow-up survey to be sent to customers after their interactions with our company. Once the data is received, please analyze it and provide written insights to our customer service team. Thank you.
+<span class="n">Click</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;https://aka.ms/installJupyterForVSCode&#39;</span><span class="o">&gt;</span><span class="n">here</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">more</span> <span class="n">info</span><span class="o">.</span>
 </pre></div>
 </div>
 </div>
