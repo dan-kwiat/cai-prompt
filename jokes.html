@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>CAI Prompt &#8212; Jupyter Book Demo</title>
+    <title>CAI Jokes &#8212; Jupyter Book Demo</title>
   
   
   
@@ -61,10 +61,10 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'jokes';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="CAI Prompt" href="README.html" />
+    <link rel="prev" title="CAI Prompt" href="README.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -130,7 +130,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="sidebar-primary-item">
   
 
-<a class="navbar-brand logo" href="#">
+<a class="navbar-brand logo" href="index.html">
   
   
   
@@ -143,15 +143,15 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1 current active">
-                <a class="reference internal" href="#">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
                     CAI Prompt
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="README.html">CAI Prompt</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jokes.html">CAI Jokes</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">CAI Jokes</a></li>
 </ul>
 
     </div>
@@ -206,7 +206,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://colab.research.google.com/github/dan-kwiat/cai-prompt/blob/main/index.ipynb" target="_blank"
+      <li><a href="https://colab.research.google.com/github/dan-kwiat/cai-prompt/blob/main/jokes.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onColab"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -254,7 +254,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/dan-kwiat/cai-prompt/issues/new?title=Issue%20on%20page%20%2Findex.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/dan-kwiat/cai-prompt/issues/new?title=Issue%20on%20page%20%2Fjokes.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -284,7 +284,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/index.ipynb" target="_blank"
+      <li><a href="_sources/jokes.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -366,7 +366,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>CAI Prompt</h1>
+    <h1>CAI Jokes</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -376,7 +376,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-tasks-concepts">Generate tasks/concepts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-concepts">Generate concepts</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-naive-responses">Generate naive responses</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#critique-naive-responses">Critique naive responses</a></li>
 </ul>
@@ -390,8 +390,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="cai-prompt">
-<h1>CAI Prompt<a class="headerlink" href="#cai-prompt" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="cai-jokes">
+<h1>CAI Jokes<a class="headerlink" href="#cai-jokes" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -402,11 +402,12 @@ document.write(`
 <span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">)</span>
 
 <span class="n">number_prompts</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="c1"># &quot;Generate a list of {tasks_description}.&quot;</span>
-<span class="n">tasks_description</span> <span class="o">=</span> <span class="s2">&quot;tasks for a customer service assistant involving reading and writing&quot;</span>
 
-<span class="c1"># &quot;Here is a {task_description}.&quot;</span>
-<span class="n">task_description</span> <span class="o">=</span> <span class="s2">&quot;task for a customer service assistant&quot;</span>
+<span class="n">constitution</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+
+<span class="s2">1. Jokes should be sad</span>
+
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -414,13 +415,32 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_concepts_prompt</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Generate a list of </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> tasks for a customer service assistant involving reading and writing. Write each one on a separate, numbered line.&quot;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Generate a list of </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> forms of transport. Write each one on a separate, numbered line.&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">get_naive_response_prompt</span><span class="p">(</span><span class="n">concept</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Write a joke about the following mode of transport:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">concept</span><span class="si">}</span><span class="s2">&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">get_critique</span><span class="p">(</span><span class="n">constitution</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">naive_response</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Here is a joke:</span>
+<span class="s2">&lt;joke&gt;</span>
+<span class="si">{</span><span class="n">naive_response</span><span class="si">}</span>
+<span class="s2">&lt;/joke&gt;</span>
+
+<span class="s2">And here are some rules about the jokes I want to tell:</span>
+
+<span class="s2">&lt;rules&gt;</span>
+<span class="si">{</span><span class="n">constitution</span><span class="si">}</span>
+<span class="s2">&lt;/rules&gt;</span>
+
+<span class="s2">Which rules does this joke break? Please explain your reasoning either way.&quot;&quot;&quot;</span>
 </pre></div>
 </div>
 </div>
 </div>
-<section id="generate-tasks-concepts">
-<h2>Generate tasks/concepts<a class="headerlink" href="#generate-tasks-concepts" title="Permalink to this heading">#</a></h2>
+<section id="generate-concepts">
+<h2>Generate concepts<a class="headerlink" href="#generate-concepts" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">completion</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">ChatCompletion</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
@@ -428,24 +448,25 @@ document.write(`
     <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
         <span class="p">{</span>
           <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
-          <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Generate a list of </span><span class="si">{</span><span class="n">number_prompts</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">tasks_description</span><span class="si">}</span><span class="s2">. Write each one on a separate, numbered line.&quot;</span><span class="p">}</span>
+          <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">get_concepts_prompt</span><span class="p">(</span><span class="n">number_prompts</span><span class="p">)</span>
+        <span class="p">}</span>
     <span class="p">],</span>
     <span class="n">max_tokens</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
-    <span class="n">temperature</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">temperature</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
     <span class="n">stream</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
 
-<span class="n">tasks_string</span> <span class="o">=</span> <span class="n">completion</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tasks_string</span><span class="p">)</span>
+<span class="n">concepts_string</span> <span class="o">=</span> <span class="n">completion</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">concepts_string</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1. Responding to customer inquiries via email or chat, which involves reading the customer&#39;s message and crafting a clear and helpful response.
-2. Documenting customer interactions and feedback in a CRM system, which involves writing detailed notes about the customer&#39;s issue or request and the actions taken to resolve it.
-3. Proofreading and editing customer-facing materials such as FAQs, product descriptions, or help center articles to ensure they are clear, accurate, and free of errors.
-4. Creating or updating templates for common customer inquiries or responses, which involves writing clear and concise language that can be easily customized for each customer.
-5. Collaborating with other teams, such as product or engineering, to ensure that customer feedback is captured and shared effectively, which involves reading and summarizing customer feedback and writing clear and actionable reports or recommendations.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1. Car
+2. Train
+3. Bicycle
+4. Boat
+5. Airplane
 </pre></div>
 </div>
 </div>
@@ -459,13 +480,16 @@ document.write(`
     <span class="k">return</span> <span class="n">items</span>
 
 
-<span class="n">tasks</span> <span class="o">=</span> <span class="n">getItems</span><span class="p">(</span><span class="n">tasks_string</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tasks</span><span class="p">))</span>
+<span class="n">concepts</span> <span class="o">=</span> <span class="n">getItems</span><span class="p">(</span><span class="n">concepts_string</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">concepts</span><span class="p">)</span> <span class="o">!=</span> <span class="n">number_prompts</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected </span><span class="si">{</span><span class="n">number_prompts</span><span class="si">}</span><span class="s2"> concepts, but got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">concepts</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">concepts</span><span class="p">)</span><span class="si">}</span><span class="s2"> concepts&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Got 5 concepts
 </pre></div>
 </div>
 </div>
@@ -478,17 +502,17 @@ document.write(`
 </div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_llm_response</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_llm_response</span><span class="p">(</span><span class="n">concept</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">ChatCompletion</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
         <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">,</span>
         <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
             <span class="p">{</span>
                 <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Here is a </span><span class="si">{</span><span class="n">task_description</span><span class="si">}</span><span class="s2">:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">Write a prompt for a large language model (LLM), asking it to carry out this task.&quot;</span>
+                <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">get_naive_response_prompt</span><span class="p">(</span><span class="n">concept</span><span class="p">)</span>
             <span class="p">}</span>
         <span class="p">],</span>
         <span class="n">max_tokens</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
-        <span class="n">temperature</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">temperature</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
         <span class="n">stream</span><span class="o">=</span><span class="kc">False</span>
     <span class="p">)</span>
     <span class="nb">str</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;choices&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;message&#39;</span><span class="p">][</span><span class="s1">&#39;content&#39;</span><span class="p">]</span>
@@ -498,61 +522,59 @@ document.write(`
 
 <span class="k">with</span> <span class="n">concurrent</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">ThreadPoolExecutor</span><span class="p">()</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
     <span class="n">naive_responses</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">get_llm_response</span><span class="p">(</span>
-        <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">[(</span><span class="n">task</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">task</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tasks</span><span class="p">)]))</span>
+        <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">[(</span><span class="n">concept</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">concept</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">concepts</span><span class="p">)]))</span>
 
 <span class="n">tasksResponsesString</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">---</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-    <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;TASK:</span><span class="se">\n</span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">NAIVE PROMPT:</span><span class="se">\n</span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">task</span><span class="p">,</span> <span class="n">response</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">tasks</span><span class="p">,</span> <span class="n">naive_responses</span><span class="p">)])</span>
+    <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;TASK:</span><span class="se">\n</span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">NAIVE RESPONSE:</span><span class="se">\n</span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">task</span><span class="p">,</span> <span class="n">response</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">concepts</span><span class="p">,</span> <span class="n">naive_responses</span><span class="p">)])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">tasksResponsesString</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Response 3 received
-Response 4 received
-Response 2 received
-Response 1 received
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Response 2 received
 Response 0 received
+Response 4 received
+Response 1 received
+Response 3 received
 TASK:
-Reading and responding to customer inquiries via email
+Car
 
-NAIVE PROMPT:
-Please use the following prompt for a large language model:
-
-Task: Reading and responding to customer inquiries via email
-
-Description: As a customer service assistant, your task is to read and respond to customer inquiries via email. Your goal is to provide timely and helpful responses to customers, addressing their concerns and questions in a professional and courteous manner. You will need to be able to understand and interpret customer inquiries, and respond with accurate and relevant information. Your responses should be clear, concise, and easy to understand, and should reflect the values and goals of the company you represent. Your role is to provide excellent customer service, and to help build and maintain positive relationships with customers.
+NAIVE RESPONSE:
+Why did the car break up with the bicycle? Because it wanted to see other vehicles.
 
 ---
 
 TASK:
-Writing product descriptions for new products
+Train
 
-NAIVE PROMPT:
-Please write product descriptions for our new products. Include all relevant details such as features, benefits, and specifications. The descriptions should be engaging, informative, and persuasive to encourage customers to make a purchase. Please ensure that the tone and language used are appropriate for our target audience. Thank you!
-
----
-
-TASK:
-Reading and analyzing customer reviews to improve product offerings
-
-NAIVE PROMPT:
-&quot;Please analyze customer reviews and provide insights on how to improve our product offerings. Specifically, identify common themes and issues mentioned by customers and suggest potential solutions to address them. Your analysis should include both positive and negative feedback to help us better understand our customers&#39; needs and preferences.&quot;
+NAIVE RESPONSE:
+Why did the train break up with his girlfriend? Because she was always locomotivated!
 
 ---
 
 TASK:
-Writing thank you notes to customers following a purchase or interaction
+Bicycle
 
-NAIVE PROMPT:
-Please generate a set of thank you notes that can be sent to customers following a purchase or interaction, using a friendly and appreciative tone.
+NAIVE RESPONSE:
+Why did the bicycle fall over? Because it was two-tired!
 
 ---
 
 TASK:
-Reading and updating customer accounts with new information or changes
+Boat
 
-NAIVE PROMPT:
-&quot;Please use the provided customer information to read and update their account with any new information or changes. Ensure that all updates are accurately recorded and saved in the customer&#39;s account.&quot;
+NAIVE RESPONSE:
+Why did the sailor bring a ladder on the boat? 
+
+Because he wanted to climb aboard!
+
+---
+
+TASK:
+Airplane
+
+NAIVE RESPONSE:
+Why did the airplane break up with his girlfriend? Because he was always flying solo!
 </pre></div>
 </div>
 </div>
@@ -563,33 +585,13 @@ NAIVE PROMPT:
 <h2>Critique naive responses<a class="headerlink" href="#critique-naive-responses" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">constitution</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-
-<span class="s2">1. The prompt should not contain a reference to a customer inquiry, review, or other input from a customer.</span>
-
-<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-
-<span class="c1"># 2. The prompt should be written in English.</span>
-
-
-<span class="k">def</span> <span class="nf">get_llm_critique</span><span class="p">(</span><span class="n">constitution</span><span class="p">,</span> <span class="n">prompt</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_llm_critique</span><span class="p">(</span><span class="n">constitution</span><span class="p">,</span> <span class="n">naive_response</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">ChatCompletion</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
         <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">,</span>
         <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
             <span class="p">{</span>
                 <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Here is a prompt written for a large language model(LLM):</span>
-<span class="s2">&lt;prompt&gt;</span>
-<span class="si">{</span><span class="n">prompt</span><span class="si">}</span>
-<span class="s2">&lt;/prompt&gt;</span>
-
-<span class="s2">And here are some rules that the prompt is supposed to follow:</span>
-
-<span class="s2">&lt;rules&gt;</span>
-<span class="si">{</span><span class="n">constitution</span><span class="si">}</span>
-<span class="s2">&lt;/rules&gt;</span>
-
-<span class="s2">Which rules does this prompt break? If it doesn&#39;t break any rules, please respond with &quot;None&quot;.&quot;&quot;&quot;</span>
+                <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">get_critique</span><span class="p">(</span><span class="n">constitution</span><span class="p">,</span> <span class="n">naive_response</span><span class="p">)</span>
             <span class="p">}</span>
         <span class="p">],</span>
         <span class="n">max_tokens</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
@@ -606,7 +608,7 @@ NAIVE PROMPT:
         <span class="n">constitution</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">[(</span><span class="n">response</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">response</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">naive_responses</span><span class="p">)]))</span>
 
 <span class="n">responseCritiqueString</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">---</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-    <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;NAIVE PROMPT:</span><span class="se">\n</span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">CRITIQUE:</span><span class="se">\n</span><span class="si">{</span><span class="n">critique</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">response</span><span class="p">,</span> <span class="n">critique</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">naive_responses</span><span class="p">,</span> <span class="n">critiques</span><span class="p">)])</span>
+    <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;NAIVE RESPONSE:</span><span class="se">\n</span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">CRITIQUE:</span><span class="se">\n</span><span class="si">{</span><span class="n">critique</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">response</span><span class="p">,</span> <span class="n">critique</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">naive_responses</span><span class="p">,</span> <span class="n">critiques</span><span class="p">)])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">responseCritiqueString</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -614,57 +616,76 @@ NAIVE PROMPT:
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Response 2 received
 Response 0 received
-Response 3 received
-Response 1 received
 Response 4 received
-NAIVE PROMPT:
-Please use the following prompt for a large language model:
-
-Task: Reading and responding to customer inquiries via email
-
-Description: As a customer service assistant, your task is to read and respond to customer inquiries via email. Your goal is to provide timely and helpful responses to customers, addressing their concerns and questions in a professional and courteous manner. You will need to be able to understand and interpret customer inquiries, and respond with accurate and relevant information. Your responses should be clear, concise, and easy to understand, and should reflect the values and goals of the company you represent. Your role is to provide excellent customer service, and to help build and maintain positive relationships with customers.
+Response 1 received
+Response 3 received
+NAIVE RESPONSE:
+Why did the car break up with the bicycle? Because it wanted to see other vehicles.
 
 CRITIQUE:
-None.
+This joke breaks the rule that jokes should be sad, as it is a lighthearted play on words and not meant to evoke sadness.
 
 ---
 
-NAIVE PROMPT:
-Please write product descriptions for our new products. Include all relevant details such as features, benefits, and specifications. The descriptions should be engaging, informative, and persuasive to encourage customers to make a purchase. Please ensure that the tone and language used are appropriate for our target audience. Thank you!
+NAIVE RESPONSE:
+Why did the train break up with his girlfriend? Because she was always locomotivated!
 
 CRITIQUE:
-None.
+This joke breaks the rule that jokes should be sad, as it is a pun-based joke that is meant to be humorous.
 
 ---
 
-NAIVE PROMPT:
-&quot;Please analyze customer reviews and provide insights on how to improve our product offerings. Specifically, identify common themes and issues mentioned by customers and suggest potential solutions to address them. Your analysis should include both positive and negative feedback to help us better understand our customers&#39; needs and preferences.&quot;
+NAIVE RESPONSE:
+Why did the bicycle fall over? Because it was two-tired!
 
 CRITIQUE:
-None.
+This joke breaks the rule that jokes should be sad, as it is a pun and meant to be humorous.
 
 ---
 
-NAIVE PROMPT:
-Please generate a set of thank you notes that can be sent to customers following a purchase or interaction, using a friendly and appreciative tone.
+NAIVE RESPONSE:
+Why did the sailor bring a ladder on the boat? 
+
+Because he wanted to climb aboard!
 
 CRITIQUE:
-None.
+This joke breaks the given rule that jokes should be sad. It is a pun-based joke that relies on a play on words to create humor, which is typically associated with lightheartedness and amusement rather than sadness.
 
 ---
 
-NAIVE PROMPT:
-&quot;Please use the provided customer information to read and update their account with any new information or changes. Ensure that all updates are accurately recorded and saved in the customer&#39;s account.&quot;
+NAIVE RESPONSE:
+Why did the airplane break up with his girlfriend? Because he was always flying solo!
 
 CRITIQUE:
-None.
+This joke breaks the rule that jokes should be sad, as it is a lighthearted and humorous play on words.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">get_critique</span><span class="p">(</span><span class="n">constitution</span><span class="p">,</span> <span class="n">naive_responses</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Here is a joke:
+&lt;joke&gt;
+Why did the car break up with the bicycle? Because it wanted to see other vehicles.
+&lt;/joke&gt;
+
+And here are some rules about the jokes I want to tell:
+
+&lt;rules&gt;
+1. Jokes should express irony.
+&lt;/rules&gt;
+
+Which rules does this joke break? If it doesn&#39;t break any rules, please respond with &quot;None&quot;.
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<div class="toctree-wrapper compound">
-</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -698,14 +719,14 @@ None.
   
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
-    <a class="right-next"
+    <a class="left-prev"
        href="README.html"
-       title="next page">
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">CAI Prompt</p>
       </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div></div>
   
@@ -725,7 +746,7 @@ None.
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-tasks-concepts">Generate tasks/concepts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-concepts">Generate concepts</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-naive-responses">Generate naive responses</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#critique-naive-responses">Critique naive responses</a></li>
 </ul>
