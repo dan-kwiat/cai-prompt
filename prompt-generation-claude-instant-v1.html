@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>CAI Jokes &#8212; Jupyter Book Demo</title>
+    <title>CAI Claude Instant &#8212; Jupyter Book Demo</title>
   
   
   
@@ -65,7 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="CAI Prompt" href="README.html" />
-    <link rel="prev" title="CAI Jokes" href="prompt-generation-claude-v1.html" />
+    <link rel="prev" title="CAI Claude" href="prompt-generation-claude-v1.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -131,7 +131,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="sidebar-primary-item">
   
 
-<a class="navbar-brand logo" href="index.html">
+<a class="navbar-brand logo" href="prompt-generation-claude-v1.html">
   
   
   
@@ -145,14 +145,13 @@ const thebe_selector_output = ".output, .cell_output"
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="index.html">
-                    CAI Prompt
+                <a class="reference internal" href="prompt-generation-claude-v1.html">
+                    CAI Claude
                 </a>
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="prompt-generation-claude-v1.html">CAI Jokes</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">CAI Jokes</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">CAI Claude Instant</a></li>
 <li class="toctree-l1"><a class="reference internal" href="README.html">CAI Prompt</a></li>
 <li class="toctree-l1"><a class="reference internal" href="jokes.html">CAI Jokes</a></li>
 </ul>
@@ -369,7 +368,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>CAI Jokes</h1>
+    <h1>CAI Claude Instant</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -394,8 +393,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="cai-jokes">
-<h1>CAI Jokes<a class="headerlink" href="#cai-jokes" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="cai-claude-instant">
+<h1>CAI Claude Instant<a class="headerlink" href="#cai-claude-instant" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
@@ -406,7 +405,7 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="o">.</span><span class="n">claude_v1_2</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="o">.</span><span class="n">claude_instant_v1_latest</span>
 
 <span class="n">num_samples</span> <span class="o">=</span> <span class="mi">5</span>
 
@@ -483,12 +482,15 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 
-1. Proofread the article for any spelling, grammar, or punctuation errors. 
-2. Ensure consistent style and formatting, like heading styles, throughout the article. 
-3. Flag any unclear or ambiguous language, wording, or phrases in the article. 
-4. Suggest alternative wording or reorganization to improve the flow or clarity of ideas. 
-5. Query the author for any facts or claims that need verification or citation of sources.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1. Proofread the article for spelling and grammar mistakes.  
+
+2. Check that all facts and figures are accurate.   
+
+3. Ensure consistency in style, capitalization, abbreviations, and punctuation.
+
+4. Make appropriate changes to the text for clarity, conciseness, and readability. 
+
+5. Mark up the text with any copyedits and provide comments or questions for the author.
 </pre></div>
 </div>
 </div>
@@ -549,52 +551,50 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TASK:
-Proofread the article for any spelling, grammar, or punctuation errors.
+Proofread the article for spelling and grammar mistakes.
 
 NAIVE RESPONSE:
- Proofread the article for any spelling, grammar, or punctuation errors.
+ Proofread the article and correct any spelling or grammar mistakes.
 
 
 ===
 
 
 TASK:
-Ensure consistent style and formatting, like heading styles, throughout the article.
+Check that all facts and figures are accurate.
 
 NAIVE RESPONSE:
- Ensure consistent heading styles, font choices, spacing, capitalization, punctuation, and other formatting elements throughout the article.
+ Verify that all numbers, dates, facts and statistics within the document are correct.
 
 
 ===
 
 
 TASK:
-Flag any unclear or ambiguous language, wording, or phrases in the article.
+Ensure consistency in style, capitalization, abbreviations, and punctuation.
 
 NAIVE RESPONSE:
- Flag any unclear or ambiguous language, wording, or phrases in the article.
+ Please ensure consistency in style, capitalization, abbreviations, and punctuation throughout the text.
 
 
 ===
 
 
 TASK:
-Suggest alternative wording or reorganization to improve the flow or clarity of ideas.
+Make appropriate changes to the text for clarity, conciseness, and readability.
 
 NAIVE RESPONSE:
- Suggest improvements to the flow and clarity of this paragraph: 
-
-The advent of artificial intelligence has brought significant opportunities and challenges. Machines can now perform human tasks like driving cars, translating languages, and diagnosing diseases. This is an exciting development, but it also poses risks to privacy and job security. Policymakers and researchers are working to ensure that AI systems are governed ethically and safely. There is no doubt that AI will continue to become more sophisticated and integrated into our day-to-day lives. We must make sure we are shaping that progress in a way that benefits humanity. 
+ Revise the text for clarity, conciseness and readability.
 
 
 ===
 
 
 TASK:
-Query the author for any facts or claims that need verification or citation of sources.
+Mark up the text with any copyedits and provide comments or questions for the author.
 
 NAIVE RESPONSE:
- Query the author for any facts or claims that need verification or citation of sources.
+ Copyedit the text and provide inline edits and comments indicating any issues.
 </pre></div>
 </div>
 </div>
@@ -614,7 +614,7 @@ NAIVE RESPONSE:
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Here is an instruction to an AI agent which acts as a Copy Editor:
 
 &lt;instruction&gt;
- Proofread the article for any spelling, grammar, or punctuation errors.
+ Proofread the article and correct any spelling or grammar mistakes.
 &lt;/instruction&gt;
 
 There may be some problems with this instruction. In particular, the instruction must abide by the following rules:
@@ -640,6 +640,7 @@ The instruction breaks the following rules:
 </div>
 </div>
 </div>
+<p>Now let’s execute the critique prompt on each of the naive responses:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_critique</span><span class="p">(</span><span class="n">naive_response</span><span class="p">):</span>
@@ -663,156 +664,107 @@ The instruction breaks the following rules:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Here is an instruction to an AI agent which acts as a Copy Editor:
-
-&lt;instruction&gt;
- Proofread the article for any spelling, grammar, or punctuation errors.
-&lt;/instruction&gt;
-
-There may be some problems with this instruction. In particular, the instruction must abide by the following rules:
-
-&lt;rules&gt;
-1. Instructions must explicitly describe the tone that the editor adpots.
-2. Instructions must explicitly state the number of words that editor&#39;s written response should be, and the number of words should be appropriate for the task.
-3. Instructions should explicitly reference the article content at the beginning, for example &#39;Here is an article:
-
-&lt;article&gt;ARTICLE_CONTENT&lt;/article&gt;
-
-[Rest of instruction goes here]&#39;.
-4. Instructions which involve multiple steps should be broken down into numbered subtasks.
-&lt;/rules&gt;
-
-List each rule that the instruction breaks. State the rule verbatim, then describe how the instruction breaks the rule.
-
-For example, if the instruction breaks rule 1, you would write:
-
-The instruction breaks the following rules:
-1. Rule: Instructions must explicitly describe the tone that the editor adpots. - Reason: ...
-NAIVE RESPONSE:
- Proofread the article for any spelling, grammar, or punctuation errors.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAIVE RESPONSE:
+ Proofread the article and correct any spelling or grammar mistakes.
 
 CRITIQUE:
  The instruction breaks the following rules:
 
-1. Rule: Instructions must explicitly describe the tone that the editor adpots. 
-- Reason: The instruction does not specify the tone that the AI agent should adopt as the Copy Editor. 
+1. Rule: Instructions must explicitly describe the tone that the editor adpots.
+Reason: The instruction does not specify the tone that the editor should adopt when proofreading and correcting the article.
 
-2. Rule: Instructions must explicitly state the number of words that editor&#39;s written response should be, and the number of words should be appropriate for the task. 
-- Reason: The instruction does not specify the word count for the AI agent&#39;s response. 
+2. Rule: Instructions must explicitly state the number of words that editor&#39;s written response should be, and the number of words should be appropriate for the task.
+Reason: The instruction does not specify the number of words that the editor&#39;s corrections should contain.
 
-3. Rule: Instructions should explicitly reference the article content at the beginning, for example &#39;Here is an article: 
-
+3. Rule: Instructions should explicitly reference the article content at the beginning, for example &#39;Here is an article:
 &lt;article&gt;ARTICLE_CONTENT&lt;/article&gt; 
+[Rest of instruction goes here].&#39;
+Reason: The instruction does not reference any specific article content.
 
-[Rest of instruction goes here]&#39;. 
-- Reason: The instruction does not include the article content that the AI agent needs to proofread. 
-
-4. Rule: Instructions which involve multiple steps should be broken down into numbered subtasks. 
-- Reason: The instruction involves multiple steps for proofreading but does not break them down into numbered subtasks.
+4. Rule: Instructions which involve multiple steps should be broken down into numbered subtasks.    
+Reason: The instruction contains a single unnumbered step.
 
 
 ===
 
 
 NAIVE RESPONSE:
- Ensure consistent heading styles, font choices, spacing, capitalization, punctuation, and other formatting elements throughout the article.
+ Verify that all numbers, dates, facts and statistics within the document are correct.
 
 CRITIQUE:
  The instruction breaks the following rules:
 
-1. Rule: Instructions must explicitly describe the tone that the editor adpots. 
-- Reason: The instruction does not specify the tone that the copy editor should adopt. It only lists the formatting elements to ensure consistency in. 
+1. Rule: Instructions must explicitly describe the tone that the editor adpots. - Reason: The instruction does not specify the tone the editor should adopt.  
 
-2. Rule: Instructions must explicitly state the number of words that editor&#39;s written response should be, and the number of words should be appropriate for the task. 
-- Reason: The instruction does not specify the word count for the copy editor&#39;s response. 
+2. Rule: Instructions must explicitly state the number of words that editor&#39;s written response should be, and the number of words should be appropriate for the task. - Reason: The instruction does not specify the number of words the editor&#39;s response should contain.
 
-3. Rule: Instructions should explicitly reference the article content at the beginning, for example &#39;Here is an article: 
+3. Rule: Instructions should explicitly reference the article content at the beginning, for example &#39;Here is an article:  
+ &lt;article&gt;ARTICLE_CONTENT&lt;/article&gt;
+[Rest of instruction goes here]&#39;. - Reason: The instruction does not reference any specific article content.
 
-&lt;article&gt;ARTICLE_CONTENT&lt;/article&gt; 
-
-[Rest of instruction goes here]&#39;. 
-- Reason: The instruction does not include the article content that the copy editor is supposed to edit. 
-
-4. Rule: Instructions which involve multiple steps should be broken down into numbered subtasks. 
-- Reason: The instruction involves multiple formatting elements to check but does not break them down into numbered subtasks.
+4. Rule: Instructions which involve multiple steps should be broken down into numbered subtasks. - Reason: The instruction contains a single unnumbered step.
 
 
 ===
 
 
 NAIVE RESPONSE:
- Flag any unclear or ambiguous language, wording, or phrases in the article.
+ Please ensure consistency in style, capitalization, abbreviations, and punctuation throughout the text.
 
 CRITIQUE:
  The instruction breaks the following rules:
 
-1. Rule: Instructions must explicitly describe the tone that the editor adpots. 
-- Reason: The instruction does not specify the tone that the AI agent should adopt in flagging unclear or ambiguous language. 
+1. Rule: Instructions must explicitly describe the tone that the editor adpots. - Reason: The instruction does not describe the tone that the editor should adopt.  
 
-2. Rule: Instructions must explicitly state the number of words that editor&#39;s written response should be, and the number of words should be appropriate for the task. 
-- Reason: The instruction does not specify the word count for the AI agent&#39;s response. 
+2. Rule: Instructions must explicitly state the number of words that editor&#39;s written response should be, and the number of words should be appropriate for the task. - Reason: The instruction does not specify the number of words in the editor&#39;s response.
 
-3. Rule: Instructions should explicitly reference the article content at the beginning, for example &#39;Here is an article: 
+3. Rule: Instructions should explicitly reference the article content at the beginning, for example &#39;Here is an article:  
+ &lt;article&gt;ARTICLE_CONTENT&lt;/article&gt;
+[Rest of instruction goes here]&#39;. - Reason: The instruction does not reference any article content.
 
-&lt;article&gt;ARTICLE_CONTENT&lt;/article&gt; 
-
-[Rest of instruction goes here]&#39;. 
-- Reason: The instruction does not include the article content that the AI agent is supposed to edit. 
-
-4. Rule: Instructions which involve multiple steps should be broken down into numbered subtasks. 
-- Reason: The instruction involves multiple steps (flagging unclear language, wording and phrases) but does not break them down into numbered subtasks.
+4. Rule: Instructions which involve multiple steps should be broken down into numbered subtasks. - Reason: The instruction contains multiple tasks but they are not broken down into numbered subtasks.
 
 
 ===
 
 
 NAIVE RESPONSE:
- Suggest improvements to the flow and clarity of this paragraph: 
-
-The advent of artificial intelligence has brought significant opportunities and challenges. Machines can now perform human tasks like driving cars, translating languages, and diagnosing diseases. This is an exciting development, but it also poses risks to privacy and job security. Policymakers and researchers are working to ensure that AI systems are governed ethically and safely. There is no doubt that AI will continue to become more sophisticated and integrated into our day-to-day lives. We must make sure we are shaping that progress in a way that benefits humanity. 
+ Revise the text for clarity, conciseness and readability.
 
 CRITIQUE:
  The instruction breaks the following rules:
 
-1. Rule: Instructions must explicitly describe the tone that the editor adpots. 
-- Reason: The instruction does not specify the tone that the AI agent should adopt in its response. 
+1. Rule: Instructions must explicitly describe the tone that the editor adpots.
+Reason: The instruction does not specify the tone that the editor should adopt when revising the text.
 
-2. Rule: Instructions must explicitly state the number of words that editor&#39;s written response should be, and the number of words should be appropriate for the task. 
-- Reason: The instruction does not specify a word count limit or target for the AI agent&#39;s response. 
+2. Rule: Instructions must explicitly state the number of words that editor&#39;s written response should be, and the number of words should be appropriate for the task.
+Reason: The instruction does not specify the number of words the editor&#39;s revised text should be.
 
-3. Rule: Instructions should explicitly reference the article content at the beginning, for example &#39;Here is an article: 
+3. Rule: Instructions should explicitly reference the article content at the beginning, for example &#39;Here is an article:
 &lt;article&gt;ARTICLE_CONTENT&lt;/article&gt; 
-[Rest of instruction goes here]&#39;. 
-- Reason: The instruction does not contain the specified XML tags to denote the start and end of the article content. The article content is not explicitly set apart from the rest of the instruction.
+[Rest of instruction goes here].&#39;
+Reason: The instruction does not reference any specific article content that the editor should revise.
 
-4. Rule: Instructions which involve multiple steps should be broken down into numbered subtasks. 
-- Reason: The instruction describes the task in a single block of text rather than breaking it down into discrete, numbered steps.
+4. Rule: Instructions which involve multiple steps should be broken down into numbered subtasks.    
+Reason: The instruction contains a single broad task (&quot;Revise the text for clarity, conciseness and readability&quot;) without breaking it into numbered subtasks.
 
 
 ===
 
 
 NAIVE RESPONSE:
- Query the author for any facts or claims that need verification or citation of sources.
+ Copyedit the text and provide inline edits and comments indicating any issues.
 
 CRITIQUE:
  The instruction breaks the following rules:
 
-1. Rule: Instructions must explicitly describe the tone that the editor adpots. 
-- Reason: The instruction does not specify the tone that the AI agent should adopt in querying the author. 
+1. Rule: Instructions must explicitly describe the tone that the editor adpots. - Reason: The instruction does not specify the tone that the editor should adopt.
 
-2. Rule: Instructions must explicitly state the number of words that editor&#39;s written response should be, and the number of words should be appropriate for the task. 
-- Reason: The instruction does not specify the word count for the AI agent&#39;s response. 
+2. Rule: Instructions must explicitly state the number of words that editor&#39;s written response should be, and the number of words should be appropriate for the task. - Reason: The instruction does not specify the number of words the editor&#39;s response should contain.
 
-3. Rule: Instructions should explicitly reference the article content at the beginning, for example &#39;Here is an article: 
+3. Rule: Instructions should explicitly reference the article content at the beginning, for example &#39;Here is an article: &lt;article&gt;ARTICLE_CONTENT&lt;/article&gt; [Rest of instruction goes here].&#39; - Reason: The instruction does not reference any specific article content.
 
-&lt;article&gt;ARTICLE_CONTENT&lt;/article&gt; 
-
-[Rest of instruction goes here]&#39;. 
-- Reason: The instruction does not include the article content that the AI agent is supposed to edit. 
-
-4. Rule: Instructions which involve multiple steps should be broken down into numbered subtasks. 
-- Reason: The instruction involves multiple steps (querying the author and verifying facts) but does not break them down into numbered subtasks.
+4. Rule: Instructions which involve multiple steps should be broken down into numbered subtasks. - Reason: The instruction contains a single unnumbered step.
 </pre></div>
 </div>
 </div>
@@ -820,16 +772,56 @@ CRITIQUE:
 </section>
 <section id="rewrite">
 <h2>Rewrite<a class="headerlink" href="#rewrite" title="Permalink to this heading">#</a></h2>
+<p>Here’s what an example rewrite prompt looks like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">get_rewrite_prompt</span><span class="p">(</span><span class="n">naive_responses</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">critiques</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Here is an instruction to an AI agent which acts as a Copy Editor:
+
+&lt;instruction&gt;
+ Proofread the article and correct any spelling or grammar mistakes.
+&lt;/instruction&gt;
+
+The instruction is supposed to follow certain rules, but it breaks them as follows:
+
+&lt;issues&gt;
+ The instruction breaks the following rules:
+
+1. Rule: Instructions must explicitly describe the tone that the editor adpots.
+Reason: The instruction does not specify the tone that the editor should adopt when proofreading and correcting the article.
+
+2. Rule: Instructions must explicitly state the number of words that editor&#39;s written response should be, and the number of words should be appropriate for the task.
+Reason: The instruction does not specify the number of words that the editor&#39;s corrections should contain.
+
+3. Rule: Instructions should explicitly reference the article content at the beginning, for example &#39;Here is an article:
+&lt;article&gt;ARTICLE_CONTENT&lt;/article&gt; 
+[Rest of instruction goes here].&#39;
+Reason: The instruction does not reference any specific article content.
+
+4. Rule: Instructions which involve multiple steps should be broken down into numbered subtasks.    
+Reason: The instruction contains a single unnumbered step.
+&lt;/issues&gt;
+
+Rewrite the instruction to address these issues. Respond directly with the rewritten instruction, without any preamble and without &lt;introduction&gt; tags.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s execute the rewrite prompt on each of the naive responses:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_rewrite</span><span class="p">(</span><span class="n">naive_response</span><span class="p">,</span> <span class="n">critique</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">get_llm_response</span><span class="p">(</span><span class="n">get_rewrite_prompt</span><span class="p">(</span><span class="n">naive_response</span><span class="p">,</span> <span class="n">critique</span><span class="p">),</span> <span class="n">model</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
 
-
 <span class="c1"># Concurrently:</span>
 <span class="c1"># with concurrent.futures.ThreadPoolExecutor() as executor:</span>
 <span class="c1">#     rewrites = list(executor.map(lambda x: get_rewrite(x[0], x[1], x[2]), [</span>
 <span class="c1">#         (response, critique, i) for i, (response, critique) in enumerate(zip(naive_responses, critiques))]))</span>
+
 
 <span class="c1"># Sequentially:</span>
 <span class="n">rewrites</span> <span class="o">=</span> <span class="p">[]</span>
@@ -844,103 +836,110 @@ CRITIQUE:
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAIVE RESPONSE:
- Proofread the text for spelling and grammar errors and provide corrections and suggestions.
+ Proofread the article and correct any spelling or grammar mistakes.
 
 REWRITE:
- Proofread the following article:  
+ Proofread the following 500-1000 word article and correct any spelling or grammar mistakes in under 200 words per correction:
 
-&lt;article&gt;ARTICLE_CONTENT&lt;/article&gt;
+&lt;article&gt;
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.  
+&lt;/article&gt;
 
-1. Check for spelling errors and provide up to 3 suggested corrections for each in up to 50 words total. Adopt a helpful and constructive tone.
-
-2. Check for grammatical errors and provide up to 3 suggested corrections for each in up to 50 words total. Adopt a helpful and constructive tone.
-
-Proofread the text for spelling and grammar errors and provide corrections and suggestions.
+1. Check for any spelling mistakes in the article.  
+2. Check sentences for correct grammar and punctuation.  
+3. Provide concise corrections or comments in under 200 words for any issues you identify.
+4. Ensure corrections are polite and respectful in tone.
 
 
 ===
 
 
 NAIVE RESPONSE:
- Verify that all numeric information and factual claims are correct.
-
-REWRITE:
- &lt;instruction&gt;
-Here is an article:
-&lt;article&gt;ARTICLE_CONTENT&lt;/article&gt;  
-
-1. Verify that all numeric information and factual claims within the first 100 words are correct in a polite and helpful tone, aiming for a 50 word response.  
-
-2. Verify that all numeric information and factual claims within the next 100 words are correct in a polite and helpful tone, aiming for a 50 word response.
-
-3. Continue verifying information for the remainder of the article in 100 word chunks, aiming for 50 word responses each time and maintaining a polite and helpful tone.
-&lt;/instruction&gt;
-
-
-===
-
-
-NAIVE RESPONSE:
- Copy edit all text to ensure consistent style choices regarding:
-
-- Capitalization
-- Abbreviation use  
-- Units of measurement
-
-REWRITE:
- Copy edit all text to adopt a formal, professional tone and aim for a 200 word response:
-
-1. Ensure consistent capitalization by:
-- Capitalizing proper nouns and names consistently    
-- Following standard capitalization rules for titles and headings.
-
-2. Ensure consistent abbreviation use by:  
-- Spelling out abbreviations on first use and including abbreviation in parentheses
-- Using abbreviations consistently thereafter.
-
-3. Ensure consistent units of measurement by:
-- Using the same units of measurement throughout (e.g. metric or imperial, miles or kilometers)
-- Spelling out units of measurement on first use and abbreviating consistently thereafter.
-
-
-===
-
-
-NAIVE RESPONSE:
- Revise text for clarity, conciseness, and improved flow.
+ Verify that all numbers, dates, facts and statistics within the document are correct.
 
 REWRITE:
  Here is the rewritten instruction:
 
-Here is an article: &lt;article&gt;ARTICLE_CONTENT&lt;/article&gt;
+Here is an article:
+&lt;article&gt;ARTICLE_CONTENT&lt;/article&gt;
 
-Revise the text to:  
-
-1. Adopt a professional yet friendly tone.  
-
-2. Improve clarity by removing ambiguities and defining specialized terms. Limit your response to 200 words.
-
-3. Improve conciseness by removing unnecessary words and sentences.   
-
-4. Improve flow by reorganizing sentences that are out of order and fixing transitions between paragraphs and ideas.
+1. Verify that all numbers, dates, facts and statistics within the article are correct in a polite and helpful tone, aiming for a 100-150 word response.
 
 
 ===
 
 
 NAIVE RESPONSE:
- Compile a style sheet listing proper nouns and terms for the writer&#39;s reference.
+ Please ensure consistency in style, capitalization, abbreviations, and punctuation throughout the text.
 
 REWRITE:
- &lt;instruction&gt;
-Here is an article:  
+ Here is the rewritten instruction:
 
-Compile a helpful and polite 10-20 word style sheet listing proper nouns and terms for the writer&#39;s reference:
+Please ensure the following in a formal and courteous tone, responding in up to 50 words:  
 
-1. Identify proper nouns and terms used in the article.  
+1. Consistency in style throughout the 200-word text. Correct any incorrect capitalization, abbreviations or punctuation. For example:
 
-2. List the proper nouns and terms alphabetically in a style sheet format for the writer to reference while editing.
-&lt;/instruction&gt;
+&lt;article&gt;
+The article content goes here.  
+&lt;/article&gt;
+
+2. Consistency in the spelling of names and places. Correct any incorrect spellings.   
+
+3. Appropriate use of contractions. Correct any inappropriate use of contractions.
+
+
+===
+
+
+NAIVE RESPONSE:
+ Revise the text for clarity, conciseness and readability.
+
+REWRITE:
+ Revise the text as follows:
+
+1. Read through the article below carefully:  
+
+&lt;article&gt;ARTICLE_CONTENT&lt;/article&gt;
+
+2. Shorten the text to 250-300 words by:
+
+- Removing repetitive and redundant content
+- Merging related paragraphs  
+- Removing unnecessary details   
+
+3. Improve the clarity of the text by:
+
+- Using simple and concise wording   
+- Removing ambiguous phrasing
+- Defining any technical or specialized terms   
+
+4. Check that the revised text maintains:
+
+- The key facts and main ideas   
+- The tone of the original  
+
+Provide your revised 250-300 word text in response.
+
+
+===
+
+
+NAIVE RESPONSE:
+ Copyedit the text and provide inline edits and comments indicating any issues.
+
+REWRITE:
+ Rewritten instruction:
+
+Copyedit the following 500-word article with a polite and constructive tone, providing inline edits and numbered comments indicating any issues:
+
+&lt;article&gt;  
+ Here is the article content that should be copyedited...
+&lt;/article&gt;
+
+1. Check spelling and grammar throughout the text.
+2. Ensure consistency in punctuation, capitalization, and abbreviations.  
+3. Verify that facts, statistics, and quotes are accurate and properly attributed.
+4. Provide suggestions to improve word choice, sentence structure, and clarity.
 </pre></div>
 </div>
 </div>
@@ -985,7 +984,7 @@ Compile a helpful and polite 10-20 word style sheet listing proper nouns and ter
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">CAI Jokes</p>
+        <p class="prev-next-title">CAI Claude</p>
       </div>
     </a>
     <a class="right-next"
