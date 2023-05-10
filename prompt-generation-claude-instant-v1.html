@@ -1,0 +1,1075 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>CAI Jokes &#8212; Jupyter Book Demo</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'prompt-generation-claude-instant-v1';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="CAI Prompt" href="README.html" />
+    <link rel="prev" title="CAI Jokes" href="prompt-generation-claude-v1.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Jupyter Book Demo</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    CAI Prompt
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="prompt-generation-claude-v1.html">CAI Jokes</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">CAI Jokes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html">CAI Prompt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jokes.html">CAI Jokes</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/dan-kwiat/cai-prompt/blob/main/prompt-generation-claude-instant-v1.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/dan-kwiat/cai-prompt" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/dan-kwiat/cai-prompt/issues/new?title=Issue%20on%20page%20%2Fprompt-generation-claude-instant-v1.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/prompt-generation-claude-instant-v1.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>CAI Jokes</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-concepts">Generate concepts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-naive-responses">Generate naive responses</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#critique">Critique</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rewrite">Rewrite</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="cai-jokes">
+<h1>CAI Jokes<a class="headerlink" href="#cai-jokes" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">get_llm_response</span> <span class="kn">import</span> <span class="n">get_llm_response</span><span class="p">,</span> <span class="n">Model</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="o">.</span><span class="n">claude_v1_2</span>
+
+<span class="n">num_samples</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">constitution_rules</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;Instructions must explicitly describe the tone that the editor adpots.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Instructions must explicitly state the number of words that editor&#39;s written response should be, and the number of words should be appropriate for the task.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Instructions should explicitly reference the article content at the beginning, for example &#39;Here is an article:</span><span class="se">\n\n</span><span class="s2">&lt;article&gt;ARTICLE_CONTENT&lt;/article&gt;</span><span class="se">\n\n</span><span class="s2">[Rest of instruction goes here]&#39;.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Instructions which involve multiple steps should be broken down into numbered subtasks.&quot;</span><span class="p">,</span>
+    <span class="c1"># &quot;Instructions must include explicit examples. For example, if the instruction is to check for spelling errors, it should include an example typo and its correction.&quot;,</span>
+<span class="p">]</span>
+<span class="n">constitution_str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">constitution_rules</span><span class="p">)))</span>
+
+
+<span class="k">def</span> <span class="nf">get_concepts_prompt</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Generate a list of </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> tasks that a Copy Editor might do as part of their job, given a written article. The output of each completed task should be written text. Write each task on a separate, numbered line.&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">get_naive_response_prompt</span><span class="p">(</span><span class="n">concept</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;I have an AI agent which acts as a Copy Editor and I want it to complete the following task:</span>
+
+<span class="s2">&lt;task&gt;</span>
+<span class="si">{</span><span class="n">concept</span><span class="si">}</span>
+<span class="s2">&lt;/task&gt;</span>
+
+<span class="s2">The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Don&#39;t include any preamble, just respond directly with the instruction for the agent.&quot;&quot;&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">get_critique_prompt</span><span class="p">(</span><span class="n">naive_response</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Here is an instruction to an AI agent which acts as a Copy Editor:</span>
+
+<span class="s2">&lt;instruction&gt;</span>
+<span class="si">{</span><span class="n">naive_response</span><span class="si">}</span>
+<span class="s2">&lt;/instruction&gt;</span>
+
+<span class="s2">There may be some problems with this instruction. In particular, the instruction must abide by the following rules:</span>
+
+<span class="s2">&lt;rules&gt;</span>
+<span class="si">{</span><span class="n">constitution_str</span><span class="si">}</span>
+<span class="s2">&lt;/rules&gt;</span>
+
+<span class="s2">List each rule that the instruction breaks. State the rule verbatim, then describe how the instruction breaks the rule.</span>
+
+<span class="s2">For example, if the instruction breaks rule 1, you would write:</span>
+
+<span class="s2">The instruction breaks the following rules:</span>
+<span class="s2">1. Rule: </span><span class="si">{</span><span class="n">constitution_rules</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> - Reason: ...&quot;&quot;&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">get_rewrite_prompt</span><span class="p">(</span><span class="n">naive_response</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">critique</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Here is an instruction to an AI agent which acts as a Copy Editor:</span>
+
+<span class="s2">&lt;instruction&gt;</span>
+<span class="si">{</span><span class="n">naive_response</span><span class="si">}</span>
+<span class="s2">&lt;/instruction&gt;</span>
+
+<span class="s2">The instruction is supposed to follow certain rules, but it breaks them as follows:</span>
+
+<span class="s2">&lt;issues&gt;</span>
+<span class="si">{</span><span class="n">critique</span><span class="si">}</span>
+<span class="s2">&lt;/issues&gt;</span>
+
+<span class="s2">Rewrite the instruction to address these issues. Respond directly with the rewritten instruction, without any preamble and without &lt;introduction&gt; tags.&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="generate-concepts">
+<h2>Generate concepts<a class="headerlink" href="#generate-concepts" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">concepts_string</span> <span class="o">=</span> <span class="n">get_llm_response</span><span class="p">(</span><span class="n">get_concepts_prompt</span><span class="p">(</span><span class="n">num_samples</span><span class="p">),</span> <span class="n">model</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">concepts_string</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 
+1. Proofread the article for any spelling, grammar, or punctuation errors. 
+2. Ensure consistent style and formatting, like heading styles, throughout the article. 
+3. Flag any unclear or ambiguous language, wording, or phrases in the article. 
+4. Suggest alternative wording or reorganization to improve the flow or clarity of ideas. 
+5. Query the author for any facts or claims that need verification or citation of sources.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">extract_items</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="n">stripped</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">stripped</span> <span class="ow">and</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^\d+\.\s&#39;</span><span class="p">,</span> <span class="n">stripped</span><span class="p">):</span>
+            <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^\d+\.\s&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">stripped</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">items</span>
+
+
+<span class="n">concepts</span> <span class="o">=</span> <span class="n">extract_items</span><span class="p">(</span><span class="n">concepts_string</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">concepts</span><span class="p">)</span> <span class="o">!=</span> <span class="n">num_samples</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected </span><span class="si">{</span><span class="n">num_samples</span><span class="si">}</span><span class="s2"> concepts, but got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">concepts</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">concepts</span><span class="p">)</span><span class="si">}</span><span class="s2"> concepts&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Got 5 concepts
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="generate-naive-responses">
+<h2>Generate naive responses<a class="headerlink" href="#generate-naive-responses" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Terminology</strong> - here we’re prompting an LLM to generate prompts, which is confusing. We’ll use the word “prompt” to refer to the initial input, and “response” to refer to the output</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_naive_response</span><span class="p">(</span><span class="n">concept</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">get_llm_response</span><span class="p">(</span><span class="n">get_naive_response_prompt</span><span class="p">(</span><span class="n">concept</span><span class="p">),</span> <span class="n">model</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>
+
+
+<span class="c1"># Concurrently (speeds up openai responses, not possible with anthropic)</span>
+<span class="c1"># with concurrent.futures.ThreadPoolExecutor() as executor:</span>
+<span class="c1">#     naive_responses = list(executor.map(lambda x: get_naive_response(</span>
+<span class="c1">#         x[0], x[1]), [(concept, i) for i, concept in enumerate(concepts)]))</span>
+
+<span class="c1"># Sequentially</span>
+<span class="n">naive_responses</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">concept</span> <span class="ow">in</span> <span class="n">concepts</span><span class="p">:</span>
+    <span class="n">naive_responses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_naive_response</span><span class="p">(</span><span class="n">concept</span><span class="p">))</span>
+
+<span class="n">tasksResponsesString</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n\n\n</span><span class="s2">===</span><span class="se">\n\n\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+    <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;TASK:</span><span class="se">\n</span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">NAIVE RESPONSE:</span><span class="se">\n</span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">task</span><span class="p">,</span> <span class="n">response</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">concepts</span><span class="p">,</span> <span class="n">naive_responses</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tasksResponsesString</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TASK:
+Proofread the article for any spelling, grammar, or punctuation errors.
+
+NAIVE RESPONSE:
+ Proofread the article for any spelling, grammar, or punctuation errors.
+
+
+===
+
+
+TASK:
+Ensure consistent style and formatting, like heading styles, throughout the article.
+
+NAIVE RESPONSE:
+ Ensure consistent heading styles, font choices, spacing, capitalization, punctuation, and other formatting elements throughout the article.
+
+
+===
+
+
+TASK:
+Flag any unclear or ambiguous language, wording, or phrases in the article.
+
+NAIVE RESPONSE:
+ Flag any unclear or ambiguous language, wording, or phrases in the article.
+
+
+===
+
+
+TASK:
+Suggest alternative wording or reorganization to improve the flow or clarity of ideas.
+
+NAIVE RESPONSE:
+ Suggest improvements to the flow and clarity of this paragraph: 
+
+The advent of artificial intelligence has brought significant opportunities and challenges. Machines can now perform human tasks like driving cars, translating languages, and diagnosing diseases. This is an exciting development, but it also poses risks to privacy and job security. Policymakers and researchers are working to ensure that AI systems are governed ethically and safely. There is no doubt that AI will continue to become more sophisticated and integrated into our day-to-day lives. We must make sure we are shaping that progress in a way that benefits humanity. 
+
+
+===
+
+
+TASK:
+Query the author for any facts or claims that need verification or citation of sources.
+
+NAIVE RESPONSE:
+ Query the author for any facts or claims that need verification or citation of sources.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Most of these responses are slightly more detailed rewrites of the corresponding task. This is a good start, but ultimately not very useful and doesn’t demonstrate most of the good practices in prompt design.</p>
+</section>
+<section id="critique">
+<h2>Critique<a class="headerlink" href="#critique" title="Permalink to this heading">#</a></h2>
+<p>Here’s what an example prompt looks like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">get_critique_prompt</span><span class="p">(</span><span class="n">naive_responses</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Here is an instruction to an AI agent which acts as a Copy Editor:
+
+&lt;instruction&gt;
+ Proofread the article for any spelling, grammar, or punctuation errors.
+&lt;/instruction&gt;
+
+There may be some problems with this instruction. In particular, the instruction must abide by the following rules:
+
+&lt;rules&gt;
+1. Instructions must explicitly describe the tone that the editor adpots.
+2. Instructions must explicitly state the number of words that editor&#39;s written response should be, and the number of words should be appropriate for the task.
+3. Instructions should explicitly reference the article content at the beginning, for example &#39;Here is an article:
+
+&lt;article&gt;ARTICLE_CONTENT&lt;/article&gt;
+
+[Rest of instruction goes here]&#39;.
+4. Instructions which involve multiple steps should be broken down into numbered subtasks.
+&lt;/rules&gt;
+
+List each rule that the instruction breaks. State the rule verbatim, then describe how the instruction breaks the rule.
+
+For example, if the instruction breaks rule 1, you would write:
+
+The instruction breaks the following rules:
+1. Rule: Instructions must explicitly describe the tone that the editor adpots. - Reason: ...
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_critique</span><span class="p">(</span><span class="n">naive_response</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">get_llm_response</span><span class="p">(</span><span class="n">get_critique_prompt</span><span class="p">(</span><span class="n">naive_response</span><span class="p">),</span> <span class="n">model</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Concurrently:</span>
+<span class="c1"># with concurrent.futures.ThreadPoolExecutor() as executor:</span>
+<span class="c1">#     critiques = list(executor.map(lambda x: get_critique(x[0], x[1]), [</span>
+<span class="c1">#                      (response, i) for i, response in enumerate(naive_responses)]))</span>
+
+
+<span class="c1"># Sequentially:</span>
+<span class="n">critiques</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">naive_response</span> <span class="ow">in</span> <span class="n">naive_responses</span><span class="p">:</span>
+    <span class="n">critiques</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_critique</span><span class="p">(</span><span class="n">naive_response</span><span class="p">))</span>
+
+<span class="n">responseCritiqueString</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n\n\n</span><span class="s2">===</span><span class="se">\n\n\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+    <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;NAIVE RESPONSE:</span><span class="se">\n</span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">CRITIQUE:</span><span class="se">\n</span><span class="si">{</span><span class="n">critique</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">response</span><span class="p">,</span> <span class="n">critique</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">naive_responses</span><span class="p">,</span> <span class="n">critiques</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">responseCritiqueString</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Here is an instruction to an AI agent which acts as a Copy Editor:
+
+&lt;instruction&gt;
+ Proofread the article for any spelling, grammar, or punctuation errors.
+&lt;/instruction&gt;
+
+There may be some problems with this instruction. In particular, the instruction must abide by the following rules:
+
+&lt;rules&gt;
+1. Instructions must explicitly describe the tone that the editor adpots.
+2. Instructions must explicitly state the number of words that editor&#39;s written response should be, and the number of words should be appropriate for the task.
+3. Instructions should explicitly reference the article content at the beginning, for example &#39;Here is an article:
+
+&lt;article&gt;ARTICLE_CONTENT&lt;/article&gt;
+
+[Rest of instruction goes here]&#39;.
+4. Instructions which involve multiple steps should be broken down into numbered subtasks.
+&lt;/rules&gt;
+
+List each rule that the instruction breaks. State the rule verbatim, then describe how the instruction breaks the rule.
+
+For example, if the instruction breaks rule 1, you would write:
+
+The instruction breaks the following rules:
+1. Rule: Instructions must explicitly describe the tone that the editor adpots. - Reason: ...
+NAIVE RESPONSE:
+ Proofread the article for any spelling, grammar, or punctuation errors.
+
+CRITIQUE:
+ The instruction breaks the following rules:
+
+1. Rule: Instructions must explicitly describe the tone that the editor adpots. 
+- Reason: The instruction does not specify the tone that the AI agent should adopt as the Copy Editor. 
+
+2. Rule: Instructions must explicitly state the number of words that editor&#39;s written response should be, and the number of words should be appropriate for the task. 
+- Reason: The instruction does not specify the word count for the AI agent&#39;s response. 
+
+3. Rule: Instructions should explicitly reference the article content at the beginning, for example &#39;Here is an article: 
+
+&lt;article&gt;ARTICLE_CONTENT&lt;/article&gt; 
+
+[Rest of instruction goes here]&#39;. 
+- Reason: The instruction does not include the article content that the AI agent needs to proofread. 
+
+4. Rule: Instructions which involve multiple steps should be broken down into numbered subtasks. 
+- Reason: The instruction involves multiple steps for proofreading but does not break them down into numbered subtasks.
+
+
+===
+
+
+NAIVE RESPONSE:
+ Ensure consistent heading styles, font choices, spacing, capitalization, punctuation, and other formatting elements throughout the article.
+
+CRITIQUE:
+ The instruction breaks the following rules:
+
+1. Rule: Instructions must explicitly describe the tone that the editor adpots. 
+- Reason: The instruction does not specify the tone that the copy editor should adopt. It only lists the formatting elements to ensure consistency in. 
+
+2. Rule: Instructions must explicitly state the number of words that editor&#39;s written response should be, and the number of words should be appropriate for the task. 
+- Reason: The instruction does not specify the word count for the copy editor&#39;s response. 
+
+3. Rule: Instructions should explicitly reference the article content at the beginning, for example &#39;Here is an article: 
+
+&lt;article&gt;ARTICLE_CONTENT&lt;/article&gt; 
+
+[Rest of instruction goes here]&#39;. 
+- Reason: The instruction does not include the article content that the copy editor is supposed to edit. 
+
+4. Rule: Instructions which involve multiple steps should be broken down into numbered subtasks. 
+- Reason: The instruction involves multiple formatting elements to check but does not break them down into numbered subtasks.
+
+
+===
+
+
+NAIVE RESPONSE:
+ Flag any unclear or ambiguous language, wording, or phrases in the article.
+
+CRITIQUE:
+ The instruction breaks the following rules:
+
+1. Rule: Instructions must explicitly describe the tone that the editor adpots. 
+- Reason: The instruction does not specify the tone that the AI agent should adopt in flagging unclear or ambiguous language. 
+
+2. Rule: Instructions must explicitly state the number of words that editor&#39;s written response should be, and the number of words should be appropriate for the task. 
+- Reason: The instruction does not specify the word count for the AI agent&#39;s response. 
+
+3. Rule: Instructions should explicitly reference the article content at the beginning, for example &#39;Here is an article: 
+
+&lt;article&gt;ARTICLE_CONTENT&lt;/article&gt; 
+
+[Rest of instruction goes here]&#39;. 
+- Reason: The instruction does not include the article content that the AI agent is supposed to edit. 
+
+4. Rule: Instructions which involve multiple steps should be broken down into numbered subtasks. 
+- Reason: The instruction involves multiple steps (flagging unclear language, wording and phrases) but does not break them down into numbered subtasks.
+
+
+===
+
+
+NAIVE RESPONSE:
+ Suggest improvements to the flow and clarity of this paragraph: 
+
+The advent of artificial intelligence has brought significant opportunities and challenges. Machines can now perform human tasks like driving cars, translating languages, and diagnosing diseases. This is an exciting development, but it also poses risks to privacy and job security. Policymakers and researchers are working to ensure that AI systems are governed ethically and safely. There is no doubt that AI will continue to become more sophisticated and integrated into our day-to-day lives. We must make sure we are shaping that progress in a way that benefits humanity. 
+
+CRITIQUE:
+ The instruction breaks the following rules:
+
+1. Rule: Instructions must explicitly describe the tone that the editor adpots. 
+- Reason: The instruction does not specify the tone that the AI agent should adopt in its response. 
+
+2. Rule: Instructions must explicitly state the number of words that editor&#39;s written response should be, and the number of words should be appropriate for the task. 
+- Reason: The instruction does not specify a word count limit or target for the AI agent&#39;s response. 
+
+3. Rule: Instructions should explicitly reference the article content at the beginning, for example &#39;Here is an article: 
+&lt;article&gt;ARTICLE_CONTENT&lt;/article&gt; 
+[Rest of instruction goes here]&#39;. 
+- Reason: The instruction does not contain the specified XML tags to denote the start and end of the article content. The article content is not explicitly set apart from the rest of the instruction.
+
+4. Rule: Instructions which involve multiple steps should be broken down into numbered subtasks. 
+- Reason: The instruction describes the task in a single block of text rather than breaking it down into discrete, numbered steps.
+
+
+===
+
+
+NAIVE RESPONSE:
+ Query the author for any facts or claims that need verification or citation of sources.
+
+CRITIQUE:
+ The instruction breaks the following rules:
+
+1. Rule: Instructions must explicitly describe the tone that the editor adpots. 
+- Reason: The instruction does not specify the tone that the AI agent should adopt in querying the author. 
+
+2. Rule: Instructions must explicitly state the number of words that editor&#39;s written response should be, and the number of words should be appropriate for the task. 
+- Reason: The instruction does not specify the word count for the AI agent&#39;s response. 
+
+3. Rule: Instructions should explicitly reference the article content at the beginning, for example &#39;Here is an article: 
+
+&lt;article&gt;ARTICLE_CONTENT&lt;/article&gt; 
+
+[Rest of instruction goes here]&#39;. 
+- Reason: The instruction does not include the article content that the AI agent is supposed to edit. 
+
+4. Rule: Instructions which involve multiple steps should be broken down into numbered subtasks. 
+- Reason: The instruction involves multiple steps (querying the author and verifying facts) but does not break them down into numbered subtasks.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="rewrite">
+<h2>Rewrite<a class="headerlink" href="#rewrite" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_rewrite</span><span class="p">(</span><span class="n">naive_response</span><span class="p">,</span> <span class="n">critique</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">get_llm_response</span><span class="p">(</span><span class="n">get_rewrite_prompt</span><span class="p">(</span><span class="n">naive_response</span><span class="p">,</span> <span class="n">critique</span><span class="p">),</span> <span class="n">model</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+
+
+<span class="c1"># Concurrently:</span>
+<span class="c1"># with concurrent.futures.ThreadPoolExecutor() as executor:</span>
+<span class="c1">#     rewrites = list(executor.map(lambda x: get_rewrite(x[0], x[1], x[2]), [</span>
+<span class="c1">#         (response, critique, i) for i, (response, critique) in enumerate(zip(naive_responses, critiques))]))</span>
+
+<span class="c1"># Sequentially:</span>
+<span class="n">rewrites</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">naive_response</span><span class="p">,</span> <span class="n">critique</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">naive_responses</span><span class="p">,</span> <span class="n">critiques</span><span class="p">)):</span>
+    <span class="n">rewrites</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_rewrite</span><span class="p">(</span><span class="n">naive_response</span><span class="p">,</span> <span class="n">critique</span><span class="p">))</span>
+
+<span class="n">rewriteString</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n\n\n</span><span class="s2">===</span><span class="se">\n\n\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+    <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;NAIVE RESPONSE:</span><span class="se">\n</span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">REWRITE:</span><span class="se">\n</span><span class="si">{</span><span class="n">rewrite</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">response</span><span class="p">,</span> <span class="n">rewrite</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">naive_responses</span><span class="p">,</span> <span class="n">rewrites</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rewriteString</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAIVE RESPONSE:
+ Proofread the text for spelling and grammar errors and provide corrections and suggestions.
+
+REWRITE:
+ Proofread the following article:  
+
+&lt;article&gt;ARTICLE_CONTENT&lt;/article&gt;
+
+1. Check for spelling errors and provide up to 3 suggested corrections for each in up to 50 words total. Adopt a helpful and constructive tone.
+
+2. Check for grammatical errors and provide up to 3 suggested corrections for each in up to 50 words total. Adopt a helpful and constructive tone.
+
+Proofread the text for spelling and grammar errors and provide corrections and suggestions.
+
+
+===
+
+
+NAIVE RESPONSE:
+ Verify that all numeric information and factual claims are correct.
+
+REWRITE:
+ &lt;instruction&gt;
+Here is an article:
+&lt;article&gt;ARTICLE_CONTENT&lt;/article&gt;  
+
+1. Verify that all numeric information and factual claims within the first 100 words are correct in a polite and helpful tone, aiming for a 50 word response.  
+
+2. Verify that all numeric information and factual claims within the next 100 words are correct in a polite and helpful tone, aiming for a 50 word response.
+
+3. Continue verifying information for the remainder of the article in 100 word chunks, aiming for 50 word responses each time and maintaining a polite and helpful tone.
+&lt;/instruction&gt;
+
+
+===
+
+
+NAIVE RESPONSE:
+ Copy edit all text to ensure consistent style choices regarding:
+
+- Capitalization
+- Abbreviation use  
+- Units of measurement
+
+REWRITE:
+ Copy edit all text to adopt a formal, professional tone and aim for a 200 word response:
+
+1. Ensure consistent capitalization by:
+- Capitalizing proper nouns and names consistently    
+- Following standard capitalization rules for titles and headings.
+
+2. Ensure consistent abbreviation use by:  
+- Spelling out abbreviations on first use and including abbreviation in parentheses
+- Using abbreviations consistently thereafter.
+
+3. Ensure consistent units of measurement by:
+- Using the same units of measurement throughout (e.g. metric or imperial, miles or kilometers)
+- Spelling out units of measurement on first use and abbreviating consistently thereafter.
+
+
+===
+
+
+NAIVE RESPONSE:
+ Revise text for clarity, conciseness, and improved flow.
+
+REWRITE:
+ Here is the rewritten instruction:
+
+Here is an article: &lt;article&gt;ARTICLE_CONTENT&lt;/article&gt;
+
+Revise the text to:  
+
+1. Adopt a professional yet friendly tone.  
+
+2. Improve clarity by removing ambiguities and defining specialized terms. Limit your response to 200 words.
+
+3. Improve conciseness by removing unnecessary words and sentences.   
+
+4. Improve flow by reorganizing sentences that are out of order and fixing transitions between paragraphs and ideas.
+
+
+===
+
+
+NAIVE RESPONSE:
+ Compile a style sheet listing proper nouns and terms for the writer&#39;s reference.
+
+REWRITE:
+ &lt;instruction&gt;
+Here is an article:  
+
+Compile a helpful and polite 10-20 word style sheet listing proper nouns and terms for the writer&#39;s reference:
+
+1. Identify proper nouns and terms used in the article.  
+
+2. List the proper nouns and terms alphabetically in a style sheet format for the writer to reference while editing.
+&lt;/instruction&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="prompt-generation-claude-v1.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">CAI Jokes</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="README.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">CAI Prompt</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-concepts">Generate concepts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-naive-responses">Generate naive responses</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#critique">Critique</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rewrite">Rewrite</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dan Kwiatkowski
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
