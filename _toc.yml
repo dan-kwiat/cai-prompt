@@ -4,5 +4,8 @@
 format: jb-book
 root: index
 chapters:
+  - file: prompt-generation-claude-v1
+  - file: prompt-generation-claude-instant-v1
   - file: README
+  - file: get_llm_response.py
   - file: jokes
