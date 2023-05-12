@@ -46,7 +46,7 @@ def get_claude_response(
     text = response['completion']
 
     if (prompt_args.response_prefix is not None):
-        # This is often useful when we've used `assistant_prefix` e.g. to start a numbered list of items.
+        # This is often useful to clean up after we've used `assistant_prefix` e.g. to start a numbered list of items.
         text = f"{prompt_args.response_prefix}{text}"
 
     return text
