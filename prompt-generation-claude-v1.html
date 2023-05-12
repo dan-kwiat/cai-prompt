@@ -396,27 +396,29 @@ document.write(`
 <h1>CAI Claude<a class="headerlink" href="#cai-claude" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %load ./get_llm_response.py</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %load ./llm.py</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">openai</span>
 <span class="kn">import</span> <span class="nn">anthropic</span>
+<span class="kn">import</span> <span class="nn">openai</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
 <span class="n">load_dotenv</span><span class="p">()</span>
-<span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">)</span>
+
+
 <span class="n">anthropic_client</span> <span class="o">=</span> <span class="n">anthropic</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;ANTHROPIC_API_KEY&#39;</span><span class="p">))</span>
+<span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">text_davinci_003</span> <span class="o">=</span> <span class="s1">&#39;text-davinci-003&#39;</span>
-    <span class="n">gpt_3_5_turbo</span> <span class="o">=</span> <span class="s1">&#39;gpt-3.5-turbo&#39;</span>
-    <span class="n">gpt_4</span> <span class="o">=</span> <span class="s1">&#39;gpt-4&#39;</span>
     <span class="n">claude_v1_latest</span> <span class="o">=</span> <span class="s1">&#39;claude-v1&#39;</span>
     <span class="n">claude_v1_0</span> <span class="o">=</span> <span class="s2">&quot;claude-v1.0&quot;</span>
     <span class="n">claude_v1_2</span> <span class="o">=</span> <span class="s2">&quot;claude-v1.2&quot;</span>
     <span class="n">claude_v1_3</span> <span class="o">=</span> <span class="s2">&quot;claude-v1.3&quot;</span>
     <span class="n">claude_instant_v1_latest</span> <span class="o">=</span> <span class="s2">&quot;claude-instant-v1&quot;</span>
     <span class="n">claude_instant_v1_0</span> <span class="o">=</span> <span class="s2">&quot;claude-instant-v1.0&quot;</span>
+    <span class="n">text_davinci_003</span> <span class="o">=</span> <span class="s1">&#39;text-davinci-003&#39;</span>
+    <span class="n">gpt_3_5_turbo</span> <span class="o">=</span> <span class="s1">&#39;gpt-3.5-turbo&#39;</span>
+    <span class="n">gpt_4</span> <span class="o">=</span> <span class="s1">&#39;gpt-4&#39;</span>
 
 
 <span class="k">def</span> <span class="nf">get_llm_response</span><span class="p">(</span><span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Model</span> <span class="o">=</span> <span class="n">Model</span><span class="o">.</span><span class="n">claude_v1_latest</span><span class="p">,</span> <span class="n">temp_0_1</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">):</span>
@@ -424,7 +426,6 @@ document.write(`
     <span class="n">temp_0_2</span> <span class="o">=</span> <span class="n">temp_0_1</span> <span class="o">*</span> <span class="mi">2</span>
 
     <span class="k">if</span> <span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;text-davinci-003&#39;</span><span class="p">):</span>
-        <span class="c1"># What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.</span>
         <span class="n">response</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">Completion</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
             <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
             <span class="n">prompt</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Human: </span><span class="si">{</span><span class="n">prompt</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">Assistant: &quot;</span><span class="p">,</span>
@@ -433,7 +434,6 @@ document.write(`
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;choices&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
     <span class="k">elif</span> <span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">value</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;gpt-3.5-turbo&#39;</span><span class="p">,</span> <span class="s1">&#39;gpt-4&#39;</span><span class="p">]):</span>
-        <span class="c1"># What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.</span>
         <span class="n">response</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">ChatCompletion</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
             <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
             <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
@@ -448,7 +448,6 @@ document.write(`
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;choices&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;message&#39;</span><span class="p">][</span><span class="s1">&#39;content&#39;</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># Amount of randomness injected into the response. Ranges from 0 to 1. Use temp closer to 0 for analytical / multiple choice, and temp closer to 1 for creative and generative tasks.</span>
         <span class="n">response</span> <span class="o">=</span> <span class="n">anthropic_client</span><span class="o">.</span><span class="n">completion</span><span class="p">(</span>
             <span class="n">prompt</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">anthropic</span><span class="o">.</span><span class="n">HUMAN_PROMPT</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">prompt</span><span class="si">}{</span><span class="n">anthropic</span><span class="o">.</span><span class="n">AI_PROMPT</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="n">stop_sequences</span><span class="o">=</span><span class="p">[</span><span class="n">anthropic</span><span class="o">.</span><span class="n">HUMAN_PROMPT</span><span class="p">],</span>
@@ -488,7 +487,7 @@ document.write(`
 <span class="si">{</span><span class="n">concept</span><span class="si">}</span>
 <span class="s2">&lt;/task&gt;</span>
 
-<span class="s2">The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Don&#39;t include any preamble, just respond directly with the instruction for the agent.&quot;&quot;&quot;</span>
+<span class="s2">The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Do not say anything else, just respond directly with the instruction for the agent.&quot;&quot;&quot;</span>
 
 
 <span class="k">def</span> <span class="nf">get_critique_prompt</span><span class="p">(</span><span class="n">naive_response</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -525,7 +524,7 @@ document.write(`
 <span class="si">{</span><span class="n">critique</span><span class="si">}</span>
 <span class="s2">&lt;/issues&gt;</span>
 
-<span class="s2">Rewrite the instruction to address these issues. Respond directly with the rewritten instruction, without any preamble and without &lt;instruction&gt; tags.&quot;&quot;&quot;</span>
+<span class="s2">Rewrite the instruction to address these issues. Respond directly with the rewritten instruction, do not say anything else and do not wrap your answer in &lt;instruction&gt; tags.&quot;&quot;&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -895,7 +894,7 @@ The instruction is supposed to follow certain rules, but it breaks them as follo
 - Reason: The instruction involves multiple steps (checking for different types of errors, making corrections) but does not break these down into numbered subtasks.
 &lt;/issues&gt;
 
-Rewrite the instruction to address these issues. Respond directly with the rewritten instruction, without any preamble and without &lt;instruction&gt; tags.
+Rewrite the instruction to address these issues. Respond directly with the rewritten instruction, do not say anything else and do not wrap your answer in &lt;instruction&gt; tags.
 </pre></div>
 </div>
 </div>
