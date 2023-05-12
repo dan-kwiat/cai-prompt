@@ -382,6 +382,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-naive-responses">Generate naive responses</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#critique">Critique</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rewrite">Rewrite</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rewrites-as-few-shot">Rewrites as few-shot</a></li>
 </ul>
             </nav>
         </div>
@@ -427,19 +428,11 @@ document.write(`
     <span class="n">response_prefix</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
 
-<span class="c1"># default_prompt_args = PromptType(</span>
-<span class="c1">#     model=Model.claude_v1_latest,</span>
-<span class="c1">#     human_message=None,</span>
-<span class="c1">#     temp_0_1=0.5,</span>
-<span class="c1">#     max_tokens_to_sample=1024,</span>
-<span class="c1">#     assistant_prefix=None</span>
-<span class="c1"># )</span>
-
-
 <span class="k">def</span> <span class="nf">get_claude_response</span><span class="p">(</span>
     <span class="n">prompt_args</span><span class="p">:</span> <span class="n">PromptType</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="n">wrapped_prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">anthropic</span><span class="o">.</span><span class="n">HUMAN_PROMPT</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">prompt_args</span><span class="o">.</span><span class="n">human_message</span><span class="si">}{</span><span class="n">anthropic</span><span class="o">.</span><span class="n">AI_PROMPT</span><span class="si">}</span><span class="s2">&quot;</span>
+
     <span class="k">if</span> <span class="p">(</span><span class="n">prompt_args</span><span class="o">.</span><span class="n">assistant_prefix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
         <span class="n">wrapped_prompt</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">prompt_args</span><span class="o">.</span><span class="n">assistant_prefix</span><span class="si">}</span><span class="s2">&quot;</span>
 
@@ -454,7 +447,7 @@ document.write(`
     <span class="n">text</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;completion&#39;</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="p">(</span><span class="n">prompt_args</span><span class="o">.</span><span class="n">response_prefix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="c1"># This is often useful when we&#39;ve used `assistant_prefix` e.g. to start a numbered list of items.</span>
+        <span class="c1"># This is often useful to clean up after we&#39;ve used `assistant_prefix` e.g. to start a numbered list of items.</span>
         <span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prompt_args</span><span class="o">.</span><span class="n">response_prefix</span><span class="si">}{</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span>
 
     <span class="k">return</span> <span class="n">text</span>
@@ -1019,6 +1012,148 @@ Follow the above guidelines when providing your written recommendations.
 </div>
 </div>
 </section>
+<section id="rewrites-as-few-shot">
+<h2>Rewrites as few-shot<a class="headerlink" href="#rewrites-as-few-shot" title="Permalink to this heading">#</a></h2>
+<p>This is to mimic a retrained model</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">few_shot_prompt</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">concept</span><span class="p">,</span> <span class="n">rewrite</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">concepts</span><span class="p">,</span> <span class="n">rewrites</span><span class="p">)):</span>
+    <span class="n">few_shot_prompt</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">anthropic</span><span class="o">.</span><span class="n">HUMAN_PROMPT</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">get_naive_response_prompt</span><span class="p">(</span><span class="n">concept</span><span class="p">)</span><span class="o">.</span><span class="n">human_message</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">few_shot_prompt</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">anthropic</span><span class="o">.</span><span class="n">AI_PROMPT</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">concepts</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">few_shot_prompt</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">rewrite</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">few_shot_prompt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Human: I have an AI agent which acts as a Copy Editor and I want it to complete the following task:
+
+&lt;task&gt;
+Check for spelling and grammatical errors.
+&lt;/task&gt;
+
+The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Don&#39;t include any preamble, just respond directly with the instruction for the agent.
+
+Assistant:  Check text for spelling and grammar issues, adopting a polite and professional tone. Provide a concise response of no more than 50 words summarizing the key issues found.
+
+1. Examine the article for any spelling mistakes. Mark each misspelled word.  
+
+2. Check sentences for grammatical errors such as incorrect punctuation, run-on sentences, subject-verb agreement errors, and tense inconsistencies. Mark each error found.
+
+3. Summarize the main spelling and grammar issues found in no more than  50 words. Here is an article:   
+ &lt;article&gt;ARTICLE_CONTENT&lt;/article&gt;
+
+Human: I have an AI agent which acts as a Copy Editor and I want it to complete the following task:
+
+&lt;task&gt;
+Ensure consistency in style, formatting, and terminology.
+&lt;/task&gt;
+
+The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Don&#39;t include any preamble, just respond directly with the instruction for the agent.
+
+Assistant:  Revise the following article for consistent style, format, and word choice throughout in a professional and formal tone:  
+
+Here is an article:  
+&lt;article&gt;ARTICLE_CONTENT&lt;/article&gt;
+
+1. Check for consistent verb tense, noun form, and spelling throughout the article.   
+
+2. Replace redundant or unnecessary words to make the writing more concise, while keeping the meaning intact.  Aim for no more than 50 replaced words.
+
+3. Ensure formatting of headings, lists, quotes, and references is consistent with standard styles. Make any needed corrections.
+
+4. Check that similar concepts are referred to using consistent terms and word choices throughout the article. Replace inconsistent terms with the most common term.
+
+Human: I have an AI agent which acts as a Copy Editor and I want it to complete the following task:
+
+&lt;task&gt;
+Verify facts and quotations within the text.
+&lt;/task&gt;
+
+The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Don&#39;t include any preamble, just respond directly with the instruction for the agent.
+
+Assistant:  Verify that all facts and quotations within the text are accurate, adopting a neutral and professional tone. Your response should be between 50 and 100 words.   
+
+Here is the article:
+
+&lt;article&gt;
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget arcu sed erat ullamcorper ullamcorper. Aliquam erat volutpat. 
+&lt;/article&gt;
+
+1. Check all facts mentioned within the article, including names, dates, locations and statistics.  
+2. Verify that any quotations are attributed correctly and match the original source material.
+3. Summarize any factual errors or incorrect quotations found in 1-2 sentences.
+
+Human: I have an AI agent which acts as a Copy Editor and I want it to complete the following task:
+
+&lt;task&gt;
+Identify and resolve ambiguous or unclear phrases.
+&lt;/task&gt;
+
+The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Don&#39;t include any preamble, just respond directly with the instruction for the agent.
+
+Assistant:  Revise the following article to resolve ambiguity and clarify meaning, adopting a professional yet friendly tone:  
+
+Here is an article:   
+ &lt;article&gt;ARTICLE_CONTENT&lt;/article&gt;
+
+1. Identify any ambiguous phrases, sentences, or paragraphs in the first 200 words.
+
+2. For each instance of ambiguity identified, suggest a revision in 30 words or less that resolves the ambiguity and improves clarity of meaning, while maintaining the author&#39;s intended tone and style.   
+
+3. Review the entire article and identify any additional instances of ambiguity beyond the first 200 words. Follow the same revision process as in step 2 for these instances.   
+
+4. In total, provide no more than 10 revisions to the article, with each revision being  30 words or less.
+
+Human: I have an AI agent which acts as a Copy Editor and I want it to complete the following task:
+
+&lt;task&gt;
+Make recommendations for restructuring or reorganizing the content for clarity and flow.
+&lt;/task&gt;
+
+The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Don&#39;t include any preamble, just respond directly with the instruction for the agent.
+
+Assistant:
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">few_shot_response</span> <span class="o">=</span> <span class="n">anthropic_client</span><span class="o">.</span><span class="n">completion</span><span class="p">(</span>
+    <span class="n">prompt</span><span class="o">=</span><span class="n">few_shot_prompt</span><span class="p">,</span>
+    <span class="n">stop_sequences</span><span class="o">=</span><span class="p">[</span><span class="n">anthropic</span><span class="o">.</span><span class="n">HUMAN_PROMPT</span><span class="p">],</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+    <span class="n">max_tokens_to_sample</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+    <span class="n">temperature</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="n">few_shot_response</span><span class="p">[</span><span class="s1">&#39;completion&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Suggest improvements to the structure and organization of the following article in a professional and constructive manner:
+
+Here is an article:
+&lt;article&gt;ARTICLE_CONTENT&lt;/article&gt;
+
+1. Identify any issues with the logical flow or progression of ideas in the first 200 words.   
+
+2. For each issue identified, recommend a restructuring in no more than 30 words that improves the clarity and flow of the content, while maintaining the author&#39;s intended meaning.
+
+3. Review the entire article and identify any additional issues with structure or organization beyond the first 200 words. Provide restructuring recommendations following the same guidelines as in step 2.   
+
+4. In total, provide no more than 10 restructuring recommendations for the entire article, with each recommendation being no more than 30 words.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1092,6 +1227,7 @@ Follow the above guidelines when providing your written recommendations.
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-naive-responses">Generate naive responses</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#critique">Critique</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rewrite">Rewrite</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rewrites-as-few-shot">Rewrites as few-shot</a></li>
 </ul>
   </nav></div>
 
