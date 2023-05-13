@@ -58,6 +58,7 @@ class Prompt:
         text = response['completion']
 
         if self.response_prefix:
+            # This is often useful to clean up after we've used `assistant_prefix` e.g. to start a numbered list of items.
             text = f"{self.response_prefix}{text}"
 
         return text
