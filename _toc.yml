@@ -2,9 +2,4 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: prompt-generation-claude-v1
-chapters:
-  - file: prompt-generation-claude-instant-v1
-  - file: README
-  - file: get_llm_response
-  - file: jokes
+root: index
