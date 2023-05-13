@@ -465,7 +465,7 @@ document.write(`
 <p>And here are the prompts and constitution rules we’ll be using. Don’t worry about understanding them yet, we’ll go through them step-by-step after this code block.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="o">.</span><span class="n">claude_instant_v1_latest</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="o">.</span><span class="n">claude_v1_latest</span>
 
 <span class="n">num_samples</span> <span class="o">=</span> <span class="mi">5</span>
 
@@ -543,9 +543,11 @@ document.write(`
 <span class="s2">For example, if the instruction breaks rule 1, you would write:</span>
 
 <span class="s2">The instruction breaks the following rules:</span>
+
 <span class="s2">1.</span>
 <span class="s2">&lt;rule&gt;</span><span class="si">{</span><span class="n">constitution_rules</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;/rule&gt;</span>
 <span class="s2">&lt;reason&gt;[Reason for breaking rule 1]&lt;/reason&gt;&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="n">assistant_prefix</span><span class="o">=</span><span class="s2">&quot;The instruction breaks the following rules:</span><span class="se">\n\n</span><span class="s2">&quot;</span>
     <span class="p">)</span>
 
 
@@ -601,11 +603,11 @@ Assistant: Here are 5 tasks:
 TASKS:
 
 ===
-1. Check spelling and grammar.
-2. Verify consistency of style and terminology. 
-3. Check facts and figures cited in the article for accuracy. 
-4. Recommend structural edits to improve clarity and flow.
-5. Suggest word choice improvements for conciseness and precision.
+1. Check for proper spelling, grammar, and punctuation.
+2. Ensure consistent and proper style (e.g. AP style). 
+3. Verify facts and citations are accurate.
+4. Check for proper flow, clarity, and coherence. 
+5. Query the author about any unclear or ambiguous information.
 ===
 </pre></div>
 </div>
@@ -639,7 +641,7 @@ TASKS:
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Got 5 concepts
-[&#39;Check spelling and grammar. Ensure all spelling is correct and sentences are grammatically correct.&#39;, &#39;Check consistency of style. Ensure the article follows consistent style guidelines for punctuation, capitalization, abbreviations, etc.&#39;, &#39;Verify facts and quotations. Check that any facts, statistics, dates, names and quotations used in the article are accurate.&#39;, &quot;Make sure word choice is precise. Review word choice to confirm the author&#39;s intended meaning comes through clearly. Suggest alternative phrasing where needed.&quot;, &#39;Propose structural edits. Recommend cuts or reorganization of content to improve clarity and flow.&#39;]
+[&#39;Check for proper spelling, grammar, and punctuation.&#39;, &#39;Ensure consistent and proper style (e.g. AP style).&#39;, &#39;Verify facts and citations are accurate.&#39;, &#39;Check for proper flow, clarity, and coherence.&#39;, &#39;Query the author about any unclear or ambiguous information.&#39;]
 </pre></div>
 </div>
 </div>
@@ -666,7 +668,7 @@ TASKS:
 Human: I have an AI agent which acts as a Copy Editor and I want it to complete the following task:
 
 &lt;task&gt;
-Check spelling and grammar. Ensure all spelling is correct and sentences are grammatically correct.
+Check for proper spelling, grammar, and punctuation.
 &lt;/task&gt;
 
 The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Don&#39;t include any preamble, just respond directly with the instruction for the agent.
@@ -693,54 +695,50 @@ Assistant:
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TASK:
-Check spelling and grammar. Ensure all spelling is correct and sentences are grammatically correct.
+Check for proper spelling, grammar, and punctuation.
 
 NAIVE RESPONSE:
- Check all spelling and grammar, correcting any errors found.
+ Check the spelling, grammar, and punctuation in the provided text.
 
 
 ===
 
 
 TASK:
-Check consistency of style. Ensure the article follows consistent style guidelines for punctuation, capitalization, abbreviations, etc.
+Ensure consistent and proper style (e.g. AP style).
 
 NAIVE RESPONSE:
- Check the article and ensure consistent style throughout for:
-
-- Punctuation
-- Capitalization
-- Abbreviations
+ Apply AP style guidelines to ensure consistent and proper style.
 
 
 ===
 
 
 TASK:
-Verify facts and quotations. Check that any facts, statistics, dates, names and quotations used in the article are accurate.
+Verify facts and citations are accurate.
 
 NAIVE RESPONSE:
- Verify that all facts, statistics, dates, names and quotations used in the article are accurate and correct.
+ Verify that all facts and citations in the text are accurate and from reputable sources.
 
 
 ===
 
 
 TASK:
-Make sure word choice is precise. Review word choice to confirm the author&#39;s intended meaning comes through clearly. Suggest alternative phrasing where needed.
+Check for proper flow, clarity, and coherence.
 
 NAIVE RESPONSE:
- Revise word choice for precision and clarity, recommending alternatives where needed.
+ Review and revise the text for flow, clarity, coherence, and consistency.
 
 
 ===
 
 
 TASK:
-Propose structural edits. Recommend cuts or reorganization of content to improve clarity and flow.
+Query the author about any unclear or ambiguous information.
 
 NAIVE RESPONSE:
- Revise the text structure and organization. Suggest cuts or reordering of paragraphs to improve clarity and readability.
+ Query the author for clarification on any information that is unclear or could be interpreted in multiple ways.
 </pre></div>
 </div>
 </div>
@@ -764,7 +762,7 @@ NAIVE RESPONSE:
 Human: Here is an instruction to an AI agent which acts as a Copy Editor:
 
 &lt;instruction&gt;
- Check all spelling and grammar, correcting any errors found.
+ Check the spelling, grammar, and punctuation in the provided text.
 &lt;/instruction&gt;
 
 There may be some problems with this instruction. In particular, the instruction must abide by the following rules:
@@ -785,11 +783,14 @@ List each rule that the instruction breaks. State the rule verbatim, then descri
 For example, if the instruction breaks rule 1, you would write:
 
 The instruction breaks the following rules:
+
 1.
 &lt;rule&gt;Instructions must explicitly describe the tone that the editor adopts.&lt;/rule&gt;
 &lt;reason&gt;[Reason for breaking rule 1]&lt;/reason&gt;
 
-Assistant:
+Assistant: The instruction breaks the following rules:
+
+
 ===
 </pre></div>
 </div>
@@ -810,131 +811,134 @@ Assistant:
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAIVE RESPONSE:
- Check all spelling and grammar, correcting any errors found.
+ Check the spelling, grammar, and punctuation in the provided text.
 
 CRITIQUE:
- The instruction breaks the following rules:
-
-1. 
-&lt;rule&gt;Instructions must explicitly describe the tone that the editor adopts.&lt;/rule&gt;  
-&lt;reason&gt;The instruction does not describe the tone that the editor should adopt.&lt;/reason&gt;
-
-2.
-&lt;rule&gt;Instructions must explicitly state the number of words that the editor&#39;s written response should be, and the number of words should be appropriate for the task.&lt;/rule&gt;
-&lt;reason&gt; The instruction does not state the number of words the editor&#39;s response should be.&lt;/reason&gt;
-
-3.
-&lt;rule&gt;Instructions must explicitly reference the article content at the beginning, for example &quot;Here is an article:
-&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;
-...&quot;.&lt;/rule&gt;
-&lt;reason&gt;The instruction does not reference any article content.&lt;/reason&gt;
-
-4. &lt;rule&gt;Instructions which are complicated should be broken down into numbered subtasks.&lt;/rule&gt;
- &lt;reason&gt;The instruction consists of a single task and is not broken down into subtasks, though it could benefit from being divided into checking spelling, grammar, and correcting errors.&lt;/reason&gt;
-
-
-===
-
-
-NAIVE RESPONSE:
- Check the article and ensure consistent style throughout for:
-
-- Punctuation
-- Capitalization
-- Abbreviations
-
-CRITIQUE:
- The instruction breaks the following rules:
 
 1. 
 &lt;rule&gt;Instructions must explicitly describe the tone that the editor adopts.&lt;/rule&gt;
-&lt;reason&gt;The instruction does not specify the tone that the editor should adopt.&lt;/reason&gt;
+&lt;reason&gt;The instruction does not specify the tone (formal, informal, etc.) that the editor should adopt when editing the text.&lt;/reason&gt;
 
 2.
-&lt;rule&gt;Instructions must explicitly state the number of words that the editor&#39;s written response should be, and the number of words should be appropriate for the task.&lt;/rule&gt;    
-&lt;reason&gt;The instruction does not specify the number of words in the editor&#39;s response.&lt;/reason&gt;
+&lt;rule&gt;Instructions must explicitly state the number of words that the editor&#39;s written response should be, and the number of words should be appropriate for the task.&lt;/rule&gt;
+&lt;reason&gt;The instruction does not specify the length of the editor&#39;s written response.&lt;/reason&gt;  
 
-3.
-&lt;rule&gt;Instructions must explicitly reference the article content at the beginning, for example &quot;Here is an article:
-&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt; ...&quot;.&lt;/rule&gt;
-&lt;reason&gt;The instruction does not reference any specific article content.&lt;/reason&gt;
+3. 
+&lt;rule&gt;Instructions must explicitly reference the article content at the beginning, for example &quot;Here is an article:  
 
-4. 
-&lt;rule&gt;Instructions which are complicated should be broken down into numbered subtasks.&lt;/rule&gt;
-&lt;reason&gt;The instruction lists three separate tasks without numbering them.&lt;/reason&gt;
+&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;  
+
+...&quot;.&lt;/rule&gt;
+&lt;reason&gt;The instruction does not explicitly reference the article content that the editor is supposed to edit.&lt;/reason&gt;
+
+4.
+&lt;rule&gt;Instructions which are complicated should be broken down into numbered subtasks.&lt;/rule&gt; 
+&lt;reason&gt;The instruction is a single broad task that could be broken down into subtasks to make it less complicated, but it is not broken down.&lt;/reason&gt;
 
 
 ===
 
 
 NAIVE RESPONSE:
- Verify that all facts, statistics, dates, names and quotations used in the article are accurate and correct.
+ Apply AP style guidelines to ensure consistent and proper style.
 
 CRITIQUE:
- The instruction breaks the following rules:
+ 1. &lt;rule&gt;Instructions must explicitly describe the tone that the editor adopts.&lt;/rule&gt;
+&lt;reason&gt; The instruction does not specify the tone the editor should adopt. It only says to apply AP style guidelines, but does not specify if the tone should be formal, informal, etc. &lt;/reason&gt;  
 
-1. 
-&lt;rule&gt;Instructions must explicitly describe the tone that the editor adopts.&lt;/rule&gt;  
-&lt;reason&gt;The instruction does not explicitly describe the tone that the editor should adopt.&lt;/reason&gt;
+2. &lt;rule&gt;Instructions must explicitly state the number of words that the editor&#39;s written response should be, and the number of words should be appropriate for the task.&lt;/rule&gt;
+&lt;reason&gt; The instruction does not specify the number of words the editor&#39;s response should be. &lt;/reason&gt;
 
-2.
-&lt;rule&gt;Instructions must explicitly state the number of words that the editor&#39;s written response should be, and the number of words should be appropriate for the task.&lt;/rule&gt;
-&lt;reason&gt; The instruction does not state the number of words for the editor&#39;s response.&lt;/reason&gt;
+3. &lt;rule&gt;Instructions must explicitly reference the article content at the beginning, for example &quot;Here is an article:  
 
-3.
-&lt;rule&gt;Instructions must explicitly reference the article content at the beginning, for example &quot;Here is an article:
-&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt; ...&quot;.&lt;/rule&gt;
-&lt;reason&gt;The instruction does not reference any specific article content.&lt;/reason&gt;
+&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;  
+
+...&quot;. &lt;/rule&gt; 
+&lt;reason&gt; The instruction does not reference any article content. It only provides a general instruction without specifying what content the instruction applies to. &lt;/reason&gt;
+
+4. &lt;rule&gt;Instructions which are complicated should be broken down into numbered subtasks.&lt;/rule&gt;  
+&lt;reason&gt; The instruction is a single broad instruction without any numbered subtasks to break it down, even though applying AP style guidelines thoroughly would likely require multiple subtasks. &lt;/reason&gt;
 
 
 ===
 
 
 NAIVE RESPONSE:
- Revise word choice for precision and clarity, recommending alternatives where needed.
+ Verify that all facts and citations in the text are accurate and from reputable sources.
 
 CRITIQUE:
- The instruction breaks the following rules:
 
-1. 
-&lt;rule&gt;Instructions must explicitly describe the tone that the editor adopts.&lt;/rule&gt;  
-&lt;reason&gt;The instruction does not describe the tone that the editor should adopt.&lt;/reason&gt;
+1. &lt;rule&gt;Instructions must explicitly describe the tone that the editor adopts.&lt;/rule&gt;  
+&lt;reason&gt;The instruction does not specify the tone the editor should adopt.&lt;/reason&gt;
 
-2.
+2. &lt;rule&gt;Instructions must explicitly state the number of words that the editor&#39;s written response should be, and the number of words should be appropriate for the task.&lt;/rule&gt;
+&lt;reason&gt;The instruction does not specify the number of words for the editor&#39;s response.&lt;/reason&gt;   
+
+3. &lt;rule&gt;Instructions must explicitly reference the article content at the beginning, for example &quot;Here is an article:  
+
+&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;  
+
+...&quot;.&lt;/rule&gt;
+&lt;reason&gt;The instruction does not reference an article at the beginning.&lt;/reason&gt;
+
+4. &lt;rule&gt;Instructions which are complicated should be broken down into numbered subtasks.&lt;/rule&gt; 
+&lt;reason&gt;The instruction is a single complex task and is not broken down into numbered subtasks.&lt;/reason&gt;
+
+
+===
+
+
+NAIVE RESPONSE:
+ Review and revise the text for flow, clarity, coherence, and consistency.
+
+CRITIQUE:
+ 1.
+&lt;rule&gt;Instructions must explicitly describe the tone that the editor adopts.&lt;/rule&gt;
+&lt;reason&gt;The instruction does not specify the tone the editor should adopt when revising the text.&lt;/reason&gt;
+
+2. 
 &lt;rule&gt;Instructions must explicitly state the number of words that the editor&#39;s written response should be, and the number of words should be appropriate for the task.&lt;/rule&gt;
-&lt;reason&gt;The instruction does not state the number of words the editor&#39;s response should contain.&lt;/reason&gt;
+&lt;reason&gt;The instruction does not specify the number of words the editor&#39;s response should be.&lt;/reason&gt;
 
 3.
 &lt;rule&gt;Instructions must explicitly reference the article content at the beginning, for example &quot;Here is an article:  
- &lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;...&quot;.&lt;/rule&gt;
-&lt;reason&gt;The instruction does not reference any article content.&lt;/reason&gt;
+
+&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;  
+
+...&quot;.&lt;/rule&gt;
+&lt;reason&gt;The instruction does not reference any article content.&lt;/reason&gt;  
+
+4. 
+&lt;rule&gt;Instructions which are complicated should be broken down into numbered subtasks.&lt;/rule&gt;
+&lt;reason&gt;The instruction is a single broad task that is not broken down into numbered subtasks.&lt;/reason&gt;
 
 
 ===
 
 
 NAIVE RESPONSE:
- Revise the text structure and organization. Suggest cuts or reordering of paragraphs to improve clarity and readability.
+ Query the author for clarification on any information that is unclear or could be interpreted in multiple ways.
 
 CRITIQUE:
- The instruction breaks the following rules:
-
-1. 
+ 1. 
 &lt;rule&gt;Instructions must explicitly describe the tone that the editor adopts.&lt;/rule&gt;
-&lt;reason&gt;The instruction does not specify the tone that the editor should adopt when revising the text.&lt;/reason&gt;
+&lt;reason&gt;The instruction does not specify the tone the editor should adopt when querying the author.&lt;/reason&gt;
 
 2.
-&lt;rule&gt;Instructions must explicitly state the number of words that the editor&#39;s written response should be, and the number of words should be appropriate for the task.&lt;/rule&gt;    
-&lt;reason&gt; The instruction does not specify the word count for the editor&#39;s response.&lt;/reason&gt;
+&lt;rule&gt;Instructions must explicitly state the number of words that the editor&#39;s written response should be, and the number of words should be appropriate for the task.&lt;/rule&gt;  
+&lt;reason&gt;The instruction does not specify the number of words the editor&#39;s response should be.&lt;/reason&gt;
 
 3.
-&lt;rule&gt;Instructions must explicitly reference the article content at the beginning, for example &quot;Here is an article:
+&lt;rule&gt;Instructions must explicitly reference the article content at the beginning, for example &quot;Here is an article:  
 
-&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;
+&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;  
+
 ...&quot;.&lt;/rule&gt;
-&lt;reason&gt;The instruction does not provide any article content that the editor should revise.&lt;/reason&gt;
+&lt;reason&gt;The instruction does not reference any article content.&lt;/reason&gt;  
 
-4. This rule is not broken.
+4. 
+&lt;rule&gt;Instructions which are complicated should be broken down into numbered subtasks.&lt;/rule&gt;
+&lt;reason&gt;The instruction is a single broad task and is not broken down into numbered subtasks.&lt;/reason&gt;
 </pre></div>
 </div>
 </div>
@@ -959,30 +963,32 @@ CRITIQUE:
 Human: Here is an instruction to an AI agent which acts as a Copy Editor:
 
 &lt;instruction&gt;
- Check all spelling and grammar, correcting any errors found.
+ Check the spelling, grammar, and punctuation in the provided text.
 &lt;/instruction&gt;
 
 The instruction is supposed to follow certain rules, but it breaks them as follows:
 
 &lt;issues&gt;
- The instruction breaks the following rules:
 
 1. 
-&lt;rule&gt;Instructions must explicitly describe the tone that the editor adopts.&lt;/rule&gt;  
-&lt;reason&gt;The instruction does not describe the tone that the editor should adopt.&lt;/reason&gt;
+&lt;rule&gt;Instructions must explicitly describe the tone that the editor adopts.&lt;/rule&gt;
+&lt;reason&gt;The instruction does not specify the tone (formal, informal, etc.) that the editor should adopt when editing the text.&lt;/reason&gt;
 
 2.
 &lt;rule&gt;Instructions must explicitly state the number of words that the editor&#39;s written response should be, and the number of words should be appropriate for the task.&lt;/rule&gt;
-&lt;reason&gt; The instruction does not state the number of words the editor&#39;s response should be.&lt;/reason&gt;
+&lt;reason&gt;The instruction does not specify the length of the editor&#39;s written response.&lt;/reason&gt;  
 
-3.
-&lt;rule&gt;Instructions must explicitly reference the article content at the beginning, for example &quot;Here is an article:
-&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;
+3. 
+&lt;rule&gt;Instructions must explicitly reference the article content at the beginning, for example &quot;Here is an article:  
+
+&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;  
+
 ...&quot;.&lt;/rule&gt;
-&lt;reason&gt;The instruction does not reference any article content.&lt;/reason&gt;
+&lt;reason&gt;The instruction does not explicitly reference the article content that the editor is supposed to edit.&lt;/reason&gt;
 
-4. &lt;rule&gt;Instructions which are complicated should be broken down into numbered subtasks.&lt;/rule&gt;
- &lt;reason&gt;The instruction consists of a single task and is not broken down into subtasks, though it could benefit from being divided into checking spelling, grammar, and correcting errors.&lt;/reason&gt;
+4.
+&lt;rule&gt;Instructions which are complicated should be broken down into numbered subtasks.&lt;/rule&gt; 
+&lt;reason&gt;The instruction is a single broad task that could be broken down into subtasks to make it less complicated, but it is not broken down.&lt;/reason&gt;
 &lt;/issues&gt;
 
 Rewrite the instruction to address these issues. Do not enclose your answer in &lt;instruction&gt; tags.
@@ -1010,81 +1016,112 @@ Assistant: Here is the rewritten instruction:
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAIVE RESPONSE:
- Check all spelling and grammar, correcting any errors found.
+ Check the spelling, grammar, and punctuation in the provided text.
 
 REWRITE:
- Check all spelling and grammar, correcting any errors found in a polite and professional tone. Provide corrections in under 100 words.  
 
 Here is an article:  
 
-&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;
+&lt;article&gt; 
+The quik broun fox jumpd ovr the lazy dog.
+&lt;/article&gt;
 
-1. Check the spelling of all words in the article. Flag any words that appear to be misspelled.
-
-2. Check the grammar and syntax throughout the article. Make note of any sentences that are unclear, awkward or grammatically incorrect.  
-
-3. Correct any spelling and grammar issues you identified. Replace misspelled words with the correct spelling and reword unclear or incorrect sentences as needed.
-
-
-===
-
-
-NAIVE RESPONSE:
- Check the article and ensure consistent style throughout for:
-
-- Punctuation
-- Capitalization
-- Abbreviations
-
-REWRITE:
- Check the article:  
-
-1. Ensure a consistent and professional yet straightforward tone throughout the article for:
-
-a) Punctuation - Correct and standardize the punctuation to be consistent and appropriate    
-b) Capitalization - Ensure proper use of capital letters at the beginning of sentences and for proper nouns    
-c) Abbreviations - Spell out all abbreviations on first use and thereafter use standard abbreviations  
-
-Write a 100-120 word summary of the key changes made to the style and consistency of the article.
+1. Edit the spelling, grammar, and punctuation in the provided article in a formal tone. 
+2. Your written response should be 3-5 sentences.
+3. Check that all words are spelled correctly. 
+4. Ensure that proper nouns are capitalized.
+5. Check that verbs are conjugated correctly. 
+6. Ensure that punctuation like periods, commas, and quotation marks are used correctly.
 
 
 ===
 
 
 NAIVE RESPONSE:
- Verify that all facts, statistics, dates, names and quotations used in the article are accurate and correct.
+ Apply AP style guidelines to ensure consistent and proper style.
 
 REWRITE:
- The editor should adopt a professional and polite tone. Verify the facts, statistics, dates, names and quotations used in the following 500-800 word article:   
 
-[ARTICLE_CONTENT]
-
-Check that all information is accurate and correct. The editor&#39;s response should be a maximum of 150 words summarizing any inaccuracies found and recommendations for corrections.
-
-
-===
-
-
-NAIVE RESPONSE:
- Revise word choice for precision and clarity, recommending alternatives where needed.
-
-REWRITE:
- Revise word choice for precision and clarity in a polite and professional tone, recommending no more than 3 alternatives per revision in up to 50 words total. Here is an article:  
- &lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt; Revise word choice within the article as needed, favoring simple, specific language.
-
-
-===
-
-
-NAIVE RESPONSE:
- Revise the text structure and organization. Suggest cuts or reordering of paragraphs to improve clarity and readability.
-
-REWRITE:
- Revise the text structure and organization with a polite and professional tone. Suggest up to 200 word summary of cuts or reordering of paragraphs that could improve clarity and readability. Here is an article:  
+Here is an article: 
 
 &lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;
 
-Revise the article accordingly.
+Apply AP style guidelines to ensure consistent and proper style, using a formal tone. Respond with 200-300 words.
+
+1. Ensure consistent spelling, punctuation, and grammar.  
+2. Verify proper use of AP style for titles, abbreviations, numbers, etc. 
+3. Check that the overall structure and flow of the article is coherent and compelling. Move or reword sentences as needed. 
+4. Ensure the lead paragraph effectively draws the reader in and that the conclusion is impactful. 
+5. Double check that all facts stated in the article are accurate and that any quotes are correctly attributed.
+6. Flag any remaining issues with the content or flow and provide suggestions for improvement.
+
+
+===
+
+
+NAIVE RESPONSE:
+ Verify that all facts and citations in the text are accurate and from reputable sources.
+
+REWRITE:
+
+Here is an article:
+{{ARTICLE_CONTENT}}
+
+1. Adopt a formal and objective tone in your response.
+
+2. Verify that all facts and citations in the article are accurate and from reputable sources in 100-200 words.
+
+3. Ensure that any claims made in the article are supported by evidence from reputable sources. 
+
+4. Flag any potential issues with the content, flow, or structure of the article. Provide specific examples and suggestions for improvement.
+
+5. Check that the article is coherent, logically structured, and flows well from one idea to the next. Suggest any reorganization needed.
+
+6. Ensure consistent and appropriate style and formatting throughout the article. Note any needed changes to style, grammar, spelling, or punctuation.
+
+7. Provide an overall assessment of the accuracy, coherence, and quality of the content in 3-4 sentences.
+
+
+===
+
+
+NAIVE RESPONSE:
+ Review and revise the text for flow, clarity, coherence, and consistency.
+
+REWRITE:
+
+Here is an article:  
+
+&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;  
+
+Review and revise the following article in a formal and objective tone in 150-200 words:
+
+1. Ensure the flow and coherence of ideas.
+2. Check for clarity and consistency in language and style. 
+3. Revise the structure and organization as needed to improve the flow and coherence.
+
+
+===
+
+
+NAIVE RESPONSE:
+ Query the author for clarification on any information that is unclear or could be interpreted in multiple ways.
+
+REWRITE:
+
+Here is an article: 
+
+&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;
+
+1. In a polite and constructive tone, query the author for clarification on any information in the article that is unclear or could be interpreted in multiple ways. Responses should be 3 to 5 sentences (15 to 25 words) in length.
+
+2. For any claims that seem unsupported or speculative, politely ask the author to provide additional evidence or reword the claim to be less definitive. Responses should again be 3 to 5 sentences (15 to 25 words) in length.  
+
+3. Point out any spelling, grammar, or punctuation errors you notice and suggest corrections to the author. Responses can be 1 to 2 sentences (5 to 10 words) in length.  
+
+4. Ask the author if they would like you to reorganize or restructure any parts of the article for clarity or flow. Explain your suggested changes and why you think they would improve the article. Responses should be 3 to 5 sentences (15 to 25 words) in length.
+
+5. Request an updated draft from the author and review it to ensure all issues have been addressed. Respond with any final questions or comments. Responses should be 2 to 3 sentences (10 to 15 words) in length.
 </pre></div>
 </div>
 </div>
@@ -1110,70 +1147,96 @@ Revise the article accordingly.
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Human: I have an AI agent which acts as a Copy Editor and I want it to complete the following task:
 
 &lt;task&gt;
-Check spelling and grammar. Ensure all spelling is correct and sentences are grammatically correct.
+Check for proper spelling, grammar, and punctuation.
 &lt;/task&gt;
 
 The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Don&#39;t include any preamble, just respond directly with the instruction for the agent.
 
-Assistant:  Check all spelling and grammar, correcting any errors found in a polite and professional tone. Provide corrections in under 100 words.  
-
+Assistant: 
 Here is an article:  
+
+&lt;article&gt; 
+The quik broun fox jumpd ovr the lazy dog.
+&lt;/article&gt;
+
+1. Edit the spelling, grammar, and punctuation in the provided article in a formal tone. 
+2. Your written response should be 3-5 sentences.
+3. Check that all words are spelled correctly. 
+4. Ensure that proper nouns are capitalized.
+5. Check that verbs are conjugated correctly. 
+6. Ensure that punctuation like periods, commas, and quotation marks are used correctly.
+
+Human: I have an AI agent which acts as a Copy Editor and I want it to complete the following task:
+
+&lt;task&gt;
+Ensure consistent and proper style (e.g. AP style).
+&lt;/task&gt;
+
+The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Don&#39;t include any preamble, just respond directly with the instruction for the agent.
+
+Assistant: 
+Here is an article: 
 
 &lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;
 
-1. Check the spelling of all words in the article. Flag any words that appear to be misspelled.
+Apply AP style guidelines to ensure consistent and proper style, using a formal tone. Respond with 200-300 words.
 
-2. Check the grammar and syntax throughout the article. Make note of any sentences that are unclear, awkward or grammatically incorrect.  
-
-3. Correct any spelling and grammar issues you identified. Replace misspelled words with the correct spelling and reword unclear or incorrect sentences as needed.
+1. Ensure consistent spelling, punctuation, and grammar.  
+2. Verify proper use of AP style for titles, abbreviations, numbers, etc. 
+3. Check that the overall structure and flow of the article is coherent and compelling. Move or reword sentences as needed. 
+4. Ensure the lead paragraph effectively draws the reader in and that the conclusion is impactful. 
+5. Double check that all facts stated in the article are accurate and that any quotes are correctly attributed.
+6. Flag any remaining issues with the content or flow and provide suggestions for improvement.
 
 Human: I have an AI agent which acts as a Copy Editor and I want it to complete the following task:
 
 &lt;task&gt;
-Check consistency of style. Ensure the article follows consistent style guidelines for punctuation, capitalization, abbreviations, etc.
+Verify facts and citations are accurate.
 &lt;/task&gt;
 
 The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Don&#39;t include any preamble, just respond directly with the instruction for the agent.
 
-Assistant:  Check the article:  
+Assistant: 
+Here is an article:
+{{ARTICLE_CONTENT}}
 
-1. Ensure a consistent and professional yet straightforward tone throughout the article for:
+1. Adopt a formal and objective tone in your response.
 
-a) Punctuation - Correct and standardize the punctuation to be consistent and appropriate    
-b) Capitalization - Ensure proper use of capital letters at the beginning of sentences and for proper nouns    
-c) Abbreviations - Spell out all abbreviations on first use and thereafter use standard abbreviations  
+2. Verify that all facts and citations in the article are accurate and from reputable sources in 100-200 words.
 
-Write a 100-120 word summary of the key changes made to the style and consistency of the article.
+3. Ensure that any claims made in the article are supported by evidence from reputable sources. 
+
+4. Flag any potential issues with the content, flow, or structure of the article. Provide specific examples and suggestions for improvement.
+
+5. Check that the article is coherent, logically structured, and flows well from one idea to the next. Suggest any reorganization needed.
+
+6. Ensure consistent and appropriate style and formatting throughout the article. Note any needed changes to style, grammar, spelling, or punctuation.
+
+7. Provide an overall assessment of the accuracy, coherence, and quality of the content in 3-4 sentences.
 
 Human: I have an AI agent which acts as a Copy Editor and I want it to complete the following task:
 
 &lt;task&gt;
-Verify facts and quotations. Check that any facts, statistics, dates, names and quotations used in the article are accurate.
+Check for proper flow, clarity, and coherence.
 &lt;/task&gt;
 
 The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Don&#39;t include any preamble, just respond directly with the instruction for the agent.
 
-Assistant:  The editor should adopt a professional and polite tone. Verify the facts, statistics, dates, names and quotations used in the following 500-800 word article:   
+Assistant: 
+Here is an article:  
 
-[ARTICLE_CONTENT]
+&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;  
 
-Check that all information is accurate and correct. The editor&#39;s response should be a maximum of 150 words summarizing any inaccuracies found and recommendations for corrections.
+Review and revise the following article in a formal and objective tone in 150-200 words:
 
-Human: I have an AI agent which acts as a Copy Editor and I want it to complete the following task:
-
-&lt;task&gt;
-Make sure word choice is precise. Review word choice to confirm the author&#39;s intended meaning comes through clearly. Suggest alternative phrasing where needed.
-&lt;/task&gt;
-
-The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Don&#39;t include any preamble, just respond directly with the instruction for the agent.
-
-Assistant:  Revise word choice for precision and clarity in a polite and professional tone, recommending no more than 3 alternatives per revision in up to 50 words total. Here is an article:  
- &lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt; Revise word choice within the article as needed, favoring simple, specific language.
+1. Ensure the flow and coherence of ideas.
+2. Check for clarity and consistency in language and style. 
+3. Revise the structure and organization as needed to improve the flow and coherence.
 
 Human: I have an AI agent which acts as a Copy Editor and I want it to complete the following task:
 
 &lt;task&gt;
-Propose structural edits. Recommend cuts or reorganization of content to improve clarity and flow.
+Query the author about any unclear or ambiguous information.
 &lt;/task&gt;
 
 The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Don&#39;t include any preamble, just respond directly with the instruction for the agent.
@@ -1203,23 +1266,27 @@ Assistant:
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TASK:
 
 ===
-Propose structural edits. Recommend cuts or reorganization of content to improve clarity and flow.
+Query the author about any unclear or ambiguous information.
 ===
 
 FEW-SHOT RESPONSE:
 
 ===
-  Review the following 500-800 word article for clarity and flow:
+ Here is an article:
 
 &lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;
 
-In no more than 150 words, propose up to 3 structural edits that could:
+1. Review the article and identify any unclear, ambiguous or contradictory information in 3-5 sentences. 
 
-- Improve the organization and progression of ideas  
-- Eliminate repetition or redundant information   
-- Combine or split paragraphs to create logical sections
+2. Pose specific questions to the author to clarify the identified issues. Request additional details or examples where needed.
 
-Explain how the proposed edits would make the content more clear and readable, maintaining the author&#39;s intended tone and message.
+3. Ask follow up questions as needed to ensure you fully understand the key ideas and arguments presented in the article. 
+
+4. Note any suggestions you have for revising or reorganizing the content to improve clarity and flow. Provide 3-4 examples.
+
+5. Summarize the key themes and main takeaways from the article in your own words to confirm your understanding with the author. Keep your summary to 5-7 sentences.
+
+6. Thank the author for clarifying any points of confusion and for the opportunity to provide feedback. Convey your appreciation for the discussion in 2-3 sentences.
 ===
 </pre></div>
 </div>
@@ -1236,19 +1303,22 @@ Explain how the proposed edits would make the content more clear and readable, m
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FEW-SHOT CRITIQUE:
 
 ===
- The instruction breaks the following rules:
 
-1. 
-&lt;rule&gt;Instructions must explicitly describe the tone that the editor adopts.&lt;/rule&gt;   
-&lt;reason&gt;The instruction does not explicitly state the tone that the editor should adopt.&lt;/reason&gt;
+1. &lt;rule&gt;Instructions must explicitly describe the tone that the editor adopts.&lt;/rule&gt;
+&lt;reason&gt;The instruction does not specify the tone the editor should adopt in the response, such as formal, informal, polite, etc.&lt;/reason&gt;  
 
-2.
-&lt;rule&gt;Instructions must explicitly state the number of words that the editor&#39;s written response should be, and the number of words should be appropriate for the task.&lt;/rule&gt;
-&lt;reason&gt; While the instruction specifies that the editor&#39;s response should be no more than 150 words, proposing 3 structural edits, 150 words may not be enough to sufficiently explain 3 structural edits.&lt;/reason&gt;  
+2. &lt;rule&gt;Instructions must explicitly state the number of words that the editor&#39;s written response should be, and the number of words should be appropriate for the task.&lt;/rule&gt;
+&lt;reason&gt;The instruction does not specify the word count for the editor&#39;s written response.&lt;/reason&gt;
 
-3. The instruction does not break rule 3.
+3. &lt;rule&gt;Instructions must explicitly reference the article content at the beginning, for example &quot;Here is an article:  
 
-4. The instruction does not break rule 4.
+&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;  
+
+...&quot;.&lt;/rule&gt;  
+&lt;reason&gt;The instruction satisfies this rule.&lt;/reason&gt;   
+
+4. &lt;rule&gt;Instructions which are complicated should be broken down into numbered subtasks.&lt;/rule&gt;
+&lt;reason&gt;The instruction satisfies this rule by breaking down the task into numbered steps.&lt;/reason&gt;
 ===
 </pre></div>
 </div>
