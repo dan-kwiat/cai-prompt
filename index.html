@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>CAI Prompt &#8212; Jupyter Book Demo</title>
+    <title>Constitutional Prompting &#8212; Jupyter Book Demo</title>
   
   
   
@@ -129,7 +129,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="sidebar-primary-item">
   
 
-<a class="navbar-brand logo" href="prompt-generation-claude-v1.html">
+<a class="navbar-brand logo" href="#">
   
   
   
@@ -142,18 +142,13 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1">
-                <a class="reference internal" href="prompt-generation-claude-v1.html">
-                    CAI Claude
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
+                    Constitutional Prompting
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="prompt-generation-claude-instant-v1.html">CAI Claude Instant</a></li>
-<li class="toctree-l1"><a class="reference internal" href="README.html">CAI Prompt</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jokes.html">CAI Jokes</a></li>
-</ul>
-
+        
     </div>
 </nav></div>
     </div>
@@ -366,7 +361,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>CAI Prompt</h1>
+    <h1>Constitutional Prompting</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -376,9 +371,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-tasks-concepts">Generate tasks/concepts</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-naive-responses">Generate naive responses</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#critique-naive-responses">Critique naive responses</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-0-generate-concepts">Step 0: Generate concepts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-generate-naive-responses">Step 1: Generate naive responses</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-critique">Step 2: Critique</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-rewrite">Step 3: Rewrite</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-training-a-model">Step 4: Training a model</a></li>
 </ul>
             </nav>
         </div>
@@ -390,274 +387,869 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="cai-prompt">
-<h1>CAI Prompt<a class="headerlink" href="#cai-prompt" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="constitutional-prompting">
+<h1>Constitutional Prompting<a class="headerlink" href="#constitutional-prompting" title="Permalink to this heading">#</a></h1>
+<p>Using techniques from <a class="reference external" href="https://arxiv.org/abs/2212.08073">Constitutional AI</a> to generate effective prompts for an AI acting as a Copy Editor.</p>
+<p>We’ll be using this <code class="docutils literal notranslate"><span class="pre">Prompt</span></code> class throughout:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">openai</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %load ./prompt.py</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">anthropic</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
-<span class="kn">import</span> <span class="nn">concurrent.futures</span>
 <span class="n">load_dotenv</span><span class="p">()</span>
-<span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">)</span>
 
-<span class="n">number_prompts</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="c1"># &quot;Generate a list of {tasks_description}.&quot;</span>
-<span class="n">tasks_description</span> <span class="o">=</span> <span class="s2">&quot;tasks for a customer service assistant involving reading and writing&quot;</span>
 
-<span class="c1"># &quot;Here is a {task_description}.&quot;</span>
-<span class="n">task_description</span> <span class="o">=</span> <span class="s2">&quot;task for a customer service assistant&quot;</span>
+<span class="n">anthropic_client</span> <span class="o">=</span> <span class="n">anthropic</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;ANTHROPIC_API_KEY&#39;</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">claude_v1_0</span> <span class="o">=</span> <span class="s2">&quot;claude-v1.0&quot;</span>
+    <span class="n">claude_v1_2</span> <span class="o">=</span> <span class="s2">&quot;claude-v1.2&quot;</span>
+    <span class="n">claude_v1_3</span> <span class="o">=</span> <span class="s2">&quot;claude-v1.3&quot;</span>
+    <span class="n">claude_v1_3_100k</span> <span class="o">=</span> <span class="s2">&quot;claude-v1.3-100k&quot;</span>
+    <span class="n">claude_v1_latest</span> <span class="o">=</span> <span class="s2">&quot;claude-v1&quot;</span>
+    <span class="n">claude_v1_latest_100k</span> <span class="o">=</span> <span class="s2">&quot;claude-v1-100k&quot;</span>
+    <span class="n">claude_instant_v1_0</span> <span class="o">=</span> <span class="s2">&quot;claude-instant-v1.0&quot;</span>
+    <span class="n">claude_instant_v1_1</span> <span class="o">=</span> <span class="s2">&quot;claude-instant-v1.1&quot;</span>
+    <span class="n">claude_instant_v1_1_100k</span> <span class="o">=</span> <span class="s2">&quot;claude-instant-v1.1-100k&quot;</span>
+    <span class="n">claude_instant_v1_latest</span> <span class="o">=</span> <span class="s2">&quot;claude-instant-v1&quot;</span>
+    <span class="n">claude_instant_v1_latest_100k</span> <span class="o">=</span> <span class="s2">&quot;claude-instant-v1-100k&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">Prompt</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">human_message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">model</span><span class="p">:</span> <span class="n">Model</span> <span class="o">=</span> <span class="n">Model</span><span class="o">.</span><span class="n">claude_v1_latest</span><span class="p">,</span>
+        <span class="n">temp_0_1</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">max_tokens_to_sample</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">,</span>
+        <span class="n">assistant_prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">response_prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">human_message</span> <span class="o">=</span> <span class="n">human_message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">temp_0_1</span> <span class="o">=</span> <span class="n">temp_0_1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_tokens_to_sample</span> <span class="o">=</span> <span class="n">max_tokens_to_sample</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assistant_prefix</span> <span class="o">=</span> <span class="n">assistant_prefix</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">response_prefix</span> <span class="o">=</span> <span class="n">response_prefix</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">prompt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">anthropic</span><span class="o">.</span><span class="n">HUMAN_PROMPT</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">human_message</span><span class="si">}{</span><span class="n">anthropic</span><span class="o">.</span><span class="n">AI_PROMPT</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">assistant_prefix</span><span class="p">:</span>
+            <span class="n">prompt</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">assistant_prefix</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">prompt</span>
+
+    <span class="k">def</span> <span class="nf">get_response</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">anthropic_client</span><span class="o">.</span><span class="n">completion</span><span class="p">(</span>
+            <span class="n">prompt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prompt</span><span class="p">,</span>
+            <span class="n">stop_sequences</span><span class="o">=</span><span class="p">[</span><span class="n">anthropic</span><span class="o">.</span><span class="n">HUMAN_PROMPT</span><span class="p">],</span>
+            <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">max_tokens_to_sample</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_tokens_to_sample</span><span class="p">,</span>
+            <span class="n">temperature</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">temp_0_1</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">text</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;completion&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">response_prefix</span><span class="p">:</span>
+            <span class="c1"># This is often useful to clean up after we&#39;ve used `assistant_prefix` e.g. to start a numbered list of items.</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">response_prefix</span><span class="si">}{</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="k">return</span> <span class="n">text</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>And here are the prompts and constitution rules we’ll be using. Don’t worry about understanding them yet, we’ll go through them step-by-step after this code block.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_concepts_prompt</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Generate a list of </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> tasks for a customer service assistant involving reading and writing. Write each one on a separate, numbered line.&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="o">.</span><span class="n">claude_instant_v1_latest</span>
+
+<span class="n">num_samples</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="c1"># These are best practices for prompts (aka instructions) intended for a Copy Editor AI agent:</span>
+<span class="n">constitution_rules</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;Instructions must explicitly describe the tone that the editor adopts.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Instructions must explicitly state the number of words that the editor&#39;s written response should be, and the number of words should be appropriate for the task.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Instructions must explicitly reference the article content at the beginning, for example </span><span class="se">\&quot;</span><span class="s2">Here is an article:</span><span class="se">\n\n</span><span class="s2">&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;</span><span class="se">\n\n</span><span class="s2">...</span><span class="se">\&quot;</span><span class="s2">.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Instructions which are complicated should be broken down into numbered subtasks.&quot;</span><span class="p">,]</span>
+<span class="n">constitution_str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">constitution_rules</span><span class="p">)))</span>
+
+
+<span class="k">def</span> <span class="nf">get_concepts_prompt</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Prompt</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">Prompt</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+        <span class="n">temp_0_1</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+        <span class="n">human_message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Generate a list of </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> tasks that a Copy Editor might do as part of their job, given a written article. The output of each completed task should be written text. Write each task on a separate, numbered line.&quot;</span><span class="p">,</span>
+        <span class="n">assistant_prefix</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Here are </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> tasks:</span><span class="se">\n\n</span><span class="s2">1.&quot;</span><span class="p">,</span>
+        <span class="n">response_prefix</span><span class="o">=</span><span class="s2">&quot;1.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_naive_response_prompt</span><span class="p">(</span><span class="n">concept</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Prompt</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">Prompt</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+        <span class="n">temp_0_1</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+        <span class="n">human_message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;I have an AI agent which acts as a Copy Editor and I want it to complete the following task:</span>
+
+<span class="s2">&lt;task&gt;</span>
+<span class="si">{</span><span class="n">concept</span><span class="si">}</span>
+<span class="s2">&lt;/task&gt;</span>
+
+<span class="s2">The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Don&#39;t include any preamble, just respond directly with the instruction for the agent.&quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_naive_response_prompt_with_constitution</span><span class="p">(</span><span class="n">concept</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Prompt</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">Prompt</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+        <span class="n">temp_0_1</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+        <span class="n">human_message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;I have an AI agent which acts as a Copy Editor and I want it to complete the following task:</span>
+
+<span class="s2">&lt;task&gt;</span>
+<span class="si">{</span><span class="n">concept</span><span class="si">}</span>
+<span class="s2">&lt;/task&gt;</span>
+
+<span class="s2">The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. The instruction must abide by the following rules:</span>
+
+<span class="s2">&lt;rules&gt;</span>
+<span class="si">{</span><span class="n">constitution_str</span><span class="si">}</span>
+<span class="s2">&lt;/rules&gt;</span>
+
+<span class="s2">Don&#39;t include any preamble, just respond directly with the instruction for the agent.&quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_critique_prompt</span><span class="p">(</span><span class="n">naive_response</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Prompt</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">Prompt</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+        <span class="n">temp_0_1</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">human_message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;Here is an instruction to an AI agent which acts as a Copy Editor:</span>
+
+<span class="s2">&lt;instruction&gt;</span>
+<span class="si">{</span><span class="n">naive_response</span><span class="si">}</span>
+<span class="s2">&lt;/instruction&gt;</span>
+
+<span class="s2">There may be some problems with this instruction. In particular, the instruction must abide by the following rules:</span>
+
+<span class="s2">&lt;rules&gt;</span>
+<span class="si">{</span><span class="n">constitution_str</span><span class="si">}</span>
+<span class="s2">&lt;/rules&gt;</span>
+
+<span class="s2">List each rule that the instruction breaks. State the rule verbatim, then describe how the instruction breaks the rule.</span>
+
+<span class="s2">For example, if the instruction breaks rule 1, you would write:</span>
+
+<span class="s2">The instruction breaks the following rules:</span>
+<span class="s2">1.</span>
+<span class="s2">&lt;rule&gt;</span><span class="si">{</span><span class="n">constitution_rules</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;/rule&gt;</span>
+<span class="s2">&lt;reason&gt;[Reason for breaking rule 1]&lt;/reason&gt;&quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_rewrite_prompt</span><span class="p">(</span><span class="n">naive_response</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">critique</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Prompt</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">Prompt</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+        <span class="n">temp_0_1</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">human_message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;Here is an instruction to an AI agent which acts as a Copy Editor:</span>
+
+<span class="s2">&lt;instruction&gt;</span>
+<span class="si">{</span><span class="n">naive_response</span><span class="si">}</span>
+<span class="s2">&lt;/instruction&gt;</span>
+
+<span class="s2">The instruction is supposed to follow certain rules, but it breaks them as follows:</span>
+
+<span class="s2">&lt;issues&gt;</span>
+<span class="si">{</span><span class="n">critique</span><span class="si">}</span>
+<span class="s2">&lt;/issues&gt;</span>
+
+<span class="s2">Rewrite the instruction to address these issues. Do not enclose your answer in &lt;instruction&gt; tags.&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="n">assistant_prefix</span><span class="o">=</span><span class="s2">&quot;Here is the rewritten instruction:</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<section id="generate-tasks-concepts">
-<h2>Generate tasks/concepts<a class="headerlink" href="#generate-tasks-concepts" title="Permalink to this heading">#</a></h2>
+<section id="step-0-generate-concepts">
+<h2>Step 0: Generate concepts<a class="headerlink" href="#step-0-generate-concepts" title="Permalink to this heading">#</a></h2>
+<p>Before we get started on trying to generate prompts, let’s first think of some tasks we might want a Copy Editor to carry out. We’ll run a simple prompt to get a list of example tasks:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">completion</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">ChatCompletion</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">,</span>
-    <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-          <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
-          <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Generate a list of </span><span class="si">{</span><span class="n">number_prompts</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">tasks_description</span><span class="si">}</span><span class="s2">. Write each one on a separate, numbered line.&quot;</span><span class="p">}</span>
-    <span class="p">],</span>
-    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
-    <span class="n">temperature</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">stream</span><span class="o">=</span><span class="kc">False</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">concepts_prompt</span> <span class="o">=</span> <span class="n">get_concepts_prompt</span><span class="p">(</span><span class="n">num_samples</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PROMPT:</span><span class="se">\n\n</span><span class="s2">===</span><span class="se">\n</span><span class="si">{</span><span class="n">concepts_prompt</span><span class="o">.</span><span class="n">prompt</span><span class="si">}</span><span class="se">\n</span><span class="s2">===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<span class="n">tasks_string</span> <span class="o">=</span> <span class="n">completion</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tasks_string</span><span class="p">)</span>
+<span class="n">concepts_string</span> <span class="o">=</span> <span class="n">concepts_prompt</span><span class="o">.</span><span class="n">get_response</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;TASKS:</span><span class="se">\n\n</span><span class="s2">===</span><span class="se">\n</span><span class="si">{</span><span class="n">concepts_string</span><span class="si">}</span><span class="se">\n</span><span class="s2">===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1. Responding to customer inquiries via email or chat, which involves reading the customer&#39;s message and crafting a clear and helpful response.
-2. Documenting customer interactions and feedback in a CRM system, which involves writing detailed notes about the customer&#39;s issue or request and the actions taken to resolve it.
-3. Proofreading and editing customer-facing materials such as FAQs, product descriptions, or help center articles to ensure they are clear, accurate, and free of errors.
-4. Creating or updating templates for common customer inquiries or responses, which involves writing clear and concise language that can be easily customized for each customer.
-5. Collaborating with other teams, such as product or engineering, to ensure that customer feedback is captured and shared effectively, which involves reading and summarizing customer feedback and writing clear and actionable reports or recommendations.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PROMPT:
+
+===
+
+
+Human: Generate a list of 5 tasks that a Copy Editor might do as part of their job, given a written article. The output of each completed task should be written text. Write each task on a separate, numbered line.
+
+Assistant: Here are 5 tasks:
+
+1.
+===
+
+TASKS:
+
+===
+1. Check spelling and grammar.
+2. Verify consistency of style and terminology. 
+3. Check facts and figures cited in the article for accuracy. 
+4. Recommend structural edits to improve clarity and flow.
+5. Suggest word choice improvements for conciseness and precision.
+===
 </pre></div>
 </div>
 </div>
 </div>
+<p>Now let’s get these items into a list:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getItems</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+
+
+<span class="k">def</span> <span class="nf">extract_items</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
     <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">str</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
-        <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="p">:])</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="n">stripped</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">stripped</span> <span class="ow">and</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^\d+\.\s&#39;</span><span class="p">,</span> <span class="n">stripped</span><span class="p">):</span>
+            <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^\d+\.\s&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">stripped</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">items</span>
 
 
-<span class="n">tasks</span> <span class="o">=</span> <span class="n">getItems</span><span class="p">(</span><span class="n">tasks_string</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tasks</span><span class="p">))</span>
+<span class="n">concepts</span> <span class="o">=</span> <span class="n">extract_items</span><span class="p">(</span><span class="n">concepts_string</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">concepts</span><span class="p">)</span> <span class="o">!=</span> <span class="n">num_samples</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected </span><span class="si">{</span><span class="n">num_samples</span><span class="si">}</span><span class="s2"> concepts, but got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">concepts</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">concepts</span><span class="p">)</span><span class="si">}</span><span class="s2"> concepts&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">concepts</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Got 5 concepts
+[&#39;Check spelling and grammar. Ensure all spelling is correct and sentences are grammatically correct.&#39;, &#39;Check consistency of style. Ensure the article follows consistent style guidelines for punctuation, capitalization, abbreviations, etc.&#39;, &#39;Verify facts and quotations. Check that any facts, statistics, dates, names and quotations used in the article are accurate.&#39;, &quot;Make sure word choice is precise. Review word choice to confirm the author&#39;s intended meaning comes through clearly. Suggest alternative phrasing where needed.&quot;, &#39;Propose structural edits. Recommend cuts or reorganization of content to improve clarity and flow.&#39;]
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="generate-naive-responses">
-<h2>Generate naive responses<a class="headerlink" href="#generate-naive-responses" title="Permalink to this heading">#</a></h2>
+<section id="step-1-generate-naive-responses">
+<h2>Step 1: Generate naive responses<a class="headerlink" href="#step-1-generate-naive-responses" title="Permalink to this heading">#</a></h2>
+<p>First we’ll try our hand at asking the LLM to write prompts for us, given a task, and without much guidance.</p>
 <blockquote>
 <div><p><strong>Terminology</strong> - here we’re prompting an LLM to generate prompts, which is confusing. We’ll use the word “prompt” to refer to the initial input, and “response” to refer to the output</p>
 </div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_llm_response</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">ChatCompletion</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">,</span>
-        <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Here is a </span><span class="si">{</span><span class="n">task_description</span><span class="si">}</span><span class="s2">:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">Write a prompt for a large language model (LLM), asking it to carry out this task.&quot;</span>
-            <span class="p">}</span>
-        <span class="p">],</span>
-        <span class="n">max_tokens</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
-        <span class="n">temperature</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-        <span class="n">stream</span><span class="o">=</span><span class="kc">False</span>
-    <span class="p">)</span>
-    <span class="nb">str</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;choices&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;message&#39;</span><span class="p">][</span><span class="s1">&#39;content&#39;</span><span class="p">]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Response </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> received&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">str</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;EXAMPLE PROMPT:</span><span class="se">\n\n</span><span class="s2">===</span><span class="se">\n</span><span class="si">{</span><span class="n">get_naive_response_prompt</span><span class="p">(</span><span class="n">concepts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">prompt</span><span class="si">}</span><span class="se">\n</span><span class="s2">===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>EXAMPLE PROMPT:
+
+===
 
 
-<span class="k">with</span> <span class="n">concurrent</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">ThreadPoolExecutor</span><span class="p">()</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
-    <span class="n">naive_responses</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">get_llm_response</span><span class="p">(</span>
-        <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">[(</span><span class="n">task</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">task</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tasks</span><span class="p">)]))</span>
+Human: I have an AI agent which acts as a Copy Editor and I want it to complete the following task:
 
-<span class="n">tasksResponsesString</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">---</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-    <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;TASK:</span><span class="se">\n</span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">NAIVE PROMPT:</span><span class="se">\n</span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">task</span><span class="p">,</span> <span class="n">response</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">tasks</span><span class="p">,</span> <span class="n">naive_responses</span><span class="p">)])</span>
+&lt;task&gt;
+Check spelling and grammar. Ensure all spelling is correct and sentences are grammatically correct.
+&lt;/task&gt;
+
+The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Don&#39;t include any preamble, just respond directly with the instruction for the agent.
+
+Assistant:
+===
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s execute a prompt like the above, for each of our Copy Editor tasks:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Anthropic does not allow concurrent requests, so we have to do this sequentially:</span>
+<span class="n">naive_responses</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">concept</span> <span class="ow">in</span> <span class="n">concepts</span><span class="p">:</span>
+    <span class="n">naive_responses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_naive_response_prompt</span><span class="p">(</span><span class="n">concept</span><span class="p">)</span><span class="o">.</span><span class="n">get_response</span><span class="p">())</span>
+
+<span class="n">tasksResponsesString</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n\n\n</span><span class="s2">===</span><span class="se">\n\n\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+    <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;TASK:</span><span class="se">\n</span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">NAIVE RESPONSE:</span><span class="se">\n</span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">task</span><span class="p">,</span> <span class="n">response</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">concepts</span><span class="p">,</span> <span class="n">naive_responses</span><span class="p">)])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">tasksResponsesString</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Response 3 received
-Response 4 received
-Response 2 received
-Response 1 received
-Response 0 received
-TASK:
-Reading and responding to customer inquiries via email
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TASK:
+Check spelling and grammar. Ensure all spelling is correct and sentences are grammatically correct.
 
-NAIVE PROMPT:
-Please use the following prompt for a large language model:
+NAIVE RESPONSE:
+ Check all spelling and grammar, correcting any errors found.
 
-Task: Reading and responding to customer inquiries via email
 
-Description: As a customer service assistant, your task is to read and respond to customer inquiries via email. Your goal is to provide timely and helpful responses to customers, addressing their concerns and questions in a professional and courteous manner. You will need to be able to understand and interpret customer inquiries, and respond with accurate and relevant information. Your responses should be clear, concise, and easy to understand, and should reflect the values and goals of the company you represent. Your role is to provide excellent customer service, and to help build and maintain positive relationships with customers.
+===
 
----
 
 TASK:
-Writing product descriptions for new products
+Check consistency of style. Ensure the article follows consistent style guidelines for punctuation, capitalization, abbreviations, etc.
 
-NAIVE PROMPT:
-Please write product descriptions for our new products. Include all relevant details such as features, benefits, and specifications. The descriptions should be engaging, informative, and persuasive to encourage customers to make a purchase. Please ensure that the tone and language used are appropriate for our target audience. Thank you!
+NAIVE RESPONSE:
+ Check the article and ensure consistent style throughout for:
 
----
+- Punctuation
+- Capitalization
+- Abbreviations
 
-TASK:
-Reading and analyzing customer reviews to improve product offerings
 
-NAIVE PROMPT:
-&quot;Please analyze customer reviews and provide insights on how to improve our product offerings. Specifically, identify common themes and issues mentioned by customers and suggest potential solutions to address them. Your analysis should include both positive and negative feedback to help us better understand our customers&#39; needs and preferences.&quot;
+===
 
----
 
 TASK:
-Writing thank you notes to customers following a purchase or interaction
+Verify facts and quotations. Check that any facts, statistics, dates, names and quotations used in the article are accurate.
 
-NAIVE PROMPT:
-Please generate a set of thank you notes that can be sent to customers following a purchase or interaction, using a friendly and appreciative tone.
+NAIVE RESPONSE:
+ Verify that all facts, statistics, dates, names and quotations used in the article are accurate and correct.
 
----
+
+===
+
 
 TASK:
-Reading and updating customer accounts with new information or changes
+Make sure word choice is precise. Review word choice to confirm the author&#39;s intended meaning comes through clearly. Suggest alternative phrasing where needed.
 
-NAIVE PROMPT:
-&quot;Please use the provided customer information to read and update their account with any new information or changes. Ensure that all updates are accurately recorded and saved in the customer&#39;s account.&quot;
+NAIVE RESPONSE:
+ Revise word choice for precision and clarity, recommending alternatives where needed.
+
+
+===
+
+
+TASK:
+Propose structural edits. Recommend cuts or reorganization of content to improve clarity and flow.
+
+NAIVE RESPONSE:
+ Revise the text structure and organization. Suggest cuts or reordering of paragraphs to improve clarity and readability.
 </pre></div>
 </div>
 </div>
 </div>
-<p>Most of these responses are slightly more detailed rewrites of the corresponding task. This is a good start, but ultimately not very useful and doesn’t demonstrate most of the good practices in prompt design.</p>
 </section>
-<section id="critique-naive-responses">
-<h2>Critique naive responses<a class="headerlink" href="#critique-naive-responses" title="Permalink to this heading">#</a></h2>
+<section id="step-2-critique">
+<h2>Step 2: Critique<a class="headerlink" href="#step-2-critique" title="Permalink to this heading">#</a></h2>
+<p>As you can see, the naive responses above are quite similar to the original wordings of the tasks, sometimes with a bit more detail. Let’s see how closely they follow the constitution rules we defined i.e. best practices for prompt design.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">constitution</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;EXAMPLE PROMPT:</span><span class="se">\n\n</span><span class="s2">===</span><span class="se">\n</span><span class="si">{</span><span class="n">get_critique_prompt</span><span class="p">(</span><span class="n">naive_responses</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">prompt</span><span class="si">}</span><span class="se">\n</span><span class="s2">===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>EXAMPLE PROMPT:
 
-<span class="s2">1. The prompt should not contain a reference to a customer inquiry, review, or other input from a customer.</span>
-
-<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-
-<span class="c1"># 2. The prompt should be written in English.</span>
-
-
-<span class="k">def</span> <span class="nf">get_llm_critique</span><span class="p">(</span><span class="n">constitution</span><span class="p">,</span> <span class="n">prompt</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">ChatCompletion</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">,</span>
-        <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Here is a prompt written for a large language model(LLM):</span>
-<span class="s2">&lt;prompt&gt;</span>
-<span class="si">{</span><span class="n">prompt</span><span class="si">}</span>
-<span class="s2">&lt;/prompt&gt;</span>
-
-<span class="s2">And here are some rules that the prompt is supposed to follow:</span>
-
-<span class="s2">&lt;rules&gt;</span>
-<span class="si">{</span><span class="n">constitution</span><span class="si">}</span>
-<span class="s2">&lt;/rules&gt;</span>
-
-<span class="s2">Which rules does this prompt break? If it doesn&#39;t break any rules, please respond with &quot;None&quot;.&quot;&quot;&quot;</span>
-            <span class="p">}</span>
-        <span class="p">],</span>
-        <span class="n">max_tokens</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
-        <span class="n">temperature</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-        <span class="n">stream</span><span class="o">=</span><span class="kc">False</span>
-    <span class="p">)</span>
-    <span class="nb">str</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;choices&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;message&#39;</span><span class="p">][</span><span class="s1">&#39;content&#39;</span><span class="p">]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Response </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> received&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">str</span>
+===
 
 
-<span class="k">with</span> <span class="n">concurrent</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">ThreadPoolExecutor</span><span class="p">()</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
-    <span class="n">critiques</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">get_llm_critique</span><span class="p">(</span>
-        <span class="n">constitution</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">[(</span><span class="n">response</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">response</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">naive_responses</span><span class="p">)]))</span>
+Human: Here is an instruction to an AI agent which acts as a Copy Editor:
 
-<span class="n">responseCritiqueString</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">---</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-    <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;NAIVE PROMPT:</span><span class="se">\n</span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">CRITIQUE:</span><span class="se">\n</span><span class="si">{</span><span class="n">critique</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">response</span><span class="p">,</span> <span class="n">critique</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">naive_responses</span><span class="p">,</span> <span class="n">critiques</span><span class="p">)])</span>
+&lt;instruction&gt;
+ Check all spelling and grammar, correcting any errors found.
+&lt;/instruction&gt;
+
+There may be some problems with this instruction. In particular, the instruction must abide by the following rules:
+
+&lt;rules&gt;
+1. Instructions must explicitly describe the tone that the editor adopts.
+2. Instructions must explicitly state the number of words that the editor&#39;s written response should be, and the number of words should be appropriate for the task.
+3. Instructions must explicitly reference the article content at the beginning, for example &quot;Here is an article:
+
+&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;
+
+...&quot;.
+4. Instructions which are complicated should be broken down into numbered subtasks.
+&lt;/rules&gt;
+
+List each rule that the instruction breaks. State the rule verbatim, then describe how the instruction breaks the rule.
+
+For example, if the instruction breaks rule 1, you would write:
+
+The instruction breaks the following rules:
+1.
+&lt;rule&gt;Instructions must explicitly describe the tone that the editor adopts.&lt;/rule&gt;
+&lt;reason&gt;[Reason for breaking rule 1]&lt;/reason&gt;
+
+Assistant:
+===
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s execute a critique prompt like this on each of the naive responses:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">critiques</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">naive_response</span> <span class="ow">in</span> <span class="n">naive_responses</span><span class="p">:</span>
+    <span class="n">critiques</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_critique_prompt</span><span class="p">(</span><span class="n">naive_response</span><span class="p">)</span><span class="o">.</span><span class="n">get_response</span><span class="p">())</span>
+
+<span class="n">responseCritiqueString</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n\n\n</span><span class="s2">===</span><span class="se">\n\n\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+    <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;NAIVE RESPONSE:</span><span class="se">\n</span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">CRITIQUE:</span><span class="se">\n</span><span class="si">{</span><span class="n">critique</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">response</span><span class="p">,</span> <span class="n">critique</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">naive_responses</span><span class="p">,</span> <span class="n">critiques</span><span class="p">)])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">responseCritiqueString</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Response 2 received
-Response 0 received
-Response 3 received
-Response 1 received
-Response 4 received
-NAIVE PROMPT:
-Please use the following prompt for a large language model:
-
-Task: Reading and responding to customer inquiries via email
-
-Description: As a customer service assistant, your task is to read and respond to customer inquiries via email. Your goal is to provide timely and helpful responses to customers, addressing their concerns and questions in a professional and courteous manner. You will need to be able to understand and interpret customer inquiries, and respond with accurate and relevant information. Your responses should be clear, concise, and easy to understand, and should reflect the values and goals of the company you represent. Your role is to provide excellent customer service, and to help build and maintain positive relationships with customers.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAIVE RESPONSE:
+ Check all spelling and grammar, correcting any errors found.
 
 CRITIQUE:
-None.
+ The instruction breaks the following rules:
 
----
+1. 
+&lt;rule&gt;Instructions must explicitly describe the tone that the editor adopts.&lt;/rule&gt;  
+&lt;reason&gt;The instruction does not describe the tone that the editor should adopt.&lt;/reason&gt;
 
-NAIVE PROMPT:
-Please write product descriptions for our new products. Include all relevant details such as features, benefits, and specifications. The descriptions should be engaging, informative, and persuasive to encourage customers to make a purchase. Please ensure that the tone and language used are appropriate for our target audience. Thank you!
+2.
+&lt;rule&gt;Instructions must explicitly state the number of words that the editor&#39;s written response should be, and the number of words should be appropriate for the task.&lt;/rule&gt;
+&lt;reason&gt; The instruction does not state the number of words the editor&#39;s response should be.&lt;/reason&gt;
+
+3.
+&lt;rule&gt;Instructions must explicitly reference the article content at the beginning, for example &quot;Here is an article:
+&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;
+...&quot;.&lt;/rule&gt;
+&lt;reason&gt;The instruction does not reference any article content.&lt;/reason&gt;
+
+4. &lt;rule&gt;Instructions which are complicated should be broken down into numbered subtasks.&lt;/rule&gt;
+ &lt;reason&gt;The instruction consists of a single task and is not broken down into subtasks, though it could benefit from being divided into checking spelling, grammar, and correcting errors.&lt;/reason&gt;
+
+
+===
+
+
+NAIVE RESPONSE:
+ Check the article and ensure consistent style throughout for:
+
+- Punctuation
+- Capitalization
+- Abbreviations
 
 CRITIQUE:
-None.
+ The instruction breaks the following rules:
 
----
+1. 
+&lt;rule&gt;Instructions must explicitly describe the tone that the editor adopts.&lt;/rule&gt;
+&lt;reason&gt;The instruction does not specify the tone that the editor should adopt.&lt;/reason&gt;
 
-NAIVE PROMPT:
-&quot;Please analyze customer reviews and provide insights on how to improve our product offerings. Specifically, identify common themes and issues mentioned by customers and suggest potential solutions to address them. Your analysis should include both positive and negative feedback to help us better understand our customers&#39; needs and preferences.&quot;
+2.
+&lt;rule&gt;Instructions must explicitly state the number of words that the editor&#39;s written response should be, and the number of words should be appropriate for the task.&lt;/rule&gt;    
+&lt;reason&gt;The instruction does not specify the number of words in the editor&#39;s response.&lt;/reason&gt;
+
+3.
+&lt;rule&gt;Instructions must explicitly reference the article content at the beginning, for example &quot;Here is an article:
+&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt; ...&quot;.&lt;/rule&gt;
+&lt;reason&gt;The instruction does not reference any specific article content.&lt;/reason&gt;
+
+4. 
+&lt;rule&gt;Instructions which are complicated should be broken down into numbered subtasks.&lt;/rule&gt;
+&lt;reason&gt;The instruction lists three separate tasks without numbering them.&lt;/reason&gt;
+
+
+===
+
+
+NAIVE RESPONSE:
+ Verify that all facts, statistics, dates, names and quotations used in the article are accurate and correct.
 
 CRITIQUE:
-None.
+ The instruction breaks the following rules:
 
----
+1. 
+&lt;rule&gt;Instructions must explicitly describe the tone that the editor adopts.&lt;/rule&gt;  
+&lt;reason&gt;The instruction does not explicitly describe the tone that the editor should adopt.&lt;/reason&gt;
 
-NAIVE PROMPT:
-Please generate a set of thank you notes that can be sent to customers following a purchase or interaction, using a friendly and appreciative tone.
+2.
+&lt;rule&gt;Instructions must explicitly state the number of words that the editor&#39;s written response should be, and the number of words should be appropriate for the task.&lt;/rule&gt;
+&lt;reason&gt; The instruction does not state the number of words for the editor&#39;s response.&lt;/reason&gt;
+
+3.
+&lt;rule&gt;Instructions must explicitly reference the article content at the beginning, for example &quot;Here is an article:
+&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt; ...&quot;.&lt;/rule&gt;
+&lt;reason&gt;The instruction does not reference any specific article content.&lt;/reason&gt;
+
+
+===
+
+
+NAIVE RESPONSE:
+ Revise word choice for precision and clarity, recommending alternatives where needed.
 
 CRITIQUE:
-None.
+ The instruction breaks the following rules:
 
----
+1. 
+&lt;rule&gt;Instructions must explicitly describe the tone that the editor adopts.&lt;/rule&gt;  
+&lt;reason&gt;The instruction does not describe the tone that the editor should adopt.&lt;/reason&gt;
 
-NAIVE PROMPT:
-&quot;Please use the provided customer information to read and update their account with any new information or changes. Ensure that all updates are accurately recorded and saved in the customer&#39;s account.&quot;
+2.
+&lt;rule&gt;Instructions must explicitly state the number of words that the editor&#39;s written response should be, and the number of words should be appropriate for the task.&lt;/rule&gt;
+&lt;reason&gt;The instruction does not state the number of words the editor&#39;s response should contain.&lt;/reason&gt;
+
+3.
+&lt;rule&gt;Instructions must explicitly reference the article content at the beginning, for example &quot;Here is an article:  
+ &lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;...&quot;.&lt;/rule&gt;
+&lt;reason&gt;The instruction does not reference any article content.&lt;/reason&gt;
+
+
+===
+
+
+NAIVE RESPONSE:
+ Revise the text structure and organization. Suggest cuts or reordering of paragraphs to improve clarity and readability.
 
 CRITIQUE:
-None.
+ The instruction breaks the following rules:
+
+1. 
+&lt;rule&gt;Instructions must explicitly describe the tone that the editor adopts.&lt;/rule&gt;
+&lt;reason&gt;The instruction does not specify the tone that the editor should adopt when revising the text.&lt;/reason&gt;
+
+2.
+&lt;rule&gt;Instructions must explicitly state the number of words that the editor&#39;s written response should be, and the number of words should be appropriate for the task.&lt;/rule&gt;    
+&lt;reason&gt; The instruction does not specify the word count for the editor&#39;s response.&lt;/reason&gt;
+
+3.
+&lt;rule&gt;Instructions must explicitly reference the article content at the beginning, for example &quot;Here is an article:
+
+&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;
+...&quot;.&lt;/rule&gt;
+&lt;reason&gt;The instruction does not provide any article content that the editor should revise.&lt;/reason&gt;
+
+4. This rule is not broken.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-3-rewrite">
+<h2>Step 3: Rewrite<a class="headerlink" href="#step-3-rewrite" title="Permalink to this heading">#</a></h2>
+<p>So the naive responses broke every rule in our constitution. Let’s rewrite the responses, using the critiques above as context for our rewriter.</p>
+<p>Here’s what an example rewrite prompt looks like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;EXAMPLE PROMPT:</span><span class="se">\n\n</span><span class="s2">===</span><span class="se">\n</span><span class="si">{</span><span class="n">get_rewrite_prompt</span><span class="p">(</span><span class="n">naive_responses</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">critiques</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">prompt</span><span class="si">}</span><span class="se">\n</span><span class="s2">===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>EXAMPLE PROMPT:
+
+===
+
+
+Human: Here is an instruction to an AI agent which acts as a Copy Editor:
+
+&lt;instruction&gt;
+ Check all spelling and grammar, correcting any errors found.
+&lt;/instruction&gt;
+
+The instruction is supposed to follow certain rules, but it breaks them as follows:
+
+&lt;issues&gt;
+ The instruction breaks the following rules:
+
+1. 
+&lt;rule&gt;Instructions must explicitly describe the tone that the editor adopts.&lt;/rule&gt;  
+&lt;reason&gt;The instruction does not describe the tone that the editor should adopt.&lt;/reason&gt;
+
+2.
+&lt;rule&gt;Instructions must explicitly state the number of words that the editor&#39;s written response should be, and the number of words should be appropriate for the task.&lt;/rule&gt;
+&lt;reason&gt; The instruction does not state the number of words the editor&#39;s response should be.&lt;/reason&gt;
+
+3.
+&lt;rule&gt;Instructions must explicitly reference the article content at the beginning, for example &quot;Here is an article:
+&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;
+...&quot;.&lt;/rule&gt;
+&lt;reason&gt;The instruction does not reference any article content.&lt;/reason&gt;
+
+4. &lt;rule&gt;Instructions which are complicated should be broken down into numbered subtasks.&lt;/rule&gt;
+ &lt;reason&gt;The instruction consists of a single task and is not broken down into subtasks, though it could benefit from being divided into checking spelling, grammar, and correcting errors.&lt;/reason&gt;
+&lt;/issues&gt;
+
+Rewrite the instruction to address these issues. Do not enclose your answer in &lt;instruction&gt; tags.
+
+Assistant: Here is the rewritten instruction:
+
+
+===
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s execute the rewrite prompt on each of the naive responses (with the relevant critique inserted):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rewrites</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">naive_response</span><span class="p">,</span> <span class="n">critique</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">naive_responses</span><span class="p">,</span> <span class="n">critiques</span><span class="p">)):</span>
+    <span class="n">rewrites</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_rewrite_prompt</span><span class="p">(</span><span class="n">naive_response</span><span class="p">,</span> <span class="n">critique</span><span class="p">)</span><span class="o">.</span><span class="n">get_response</span><span class="p">())</span>
+
+<span class="n">rewriteString</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n\n\n</span><span class="s2">===</span><span class="se">\n\n\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+    <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;NAIVE RESPONSE:</span><span class="se">\n</span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">REWRITE:</span><span class="se">\n</span><span class="si">{</span><span class="n">rewrite</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">response</span><span class="p">,</span> <span class="n">rewrite</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">naive_responses</span><span class="p">,</span> <span class="n">rewrites</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rewriteString</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAIVE RESPONSE:
+ Check all spelling and grammar, correcting any errors found.
+
+REWRITE:
+ Check all spelling and grammar, correcting any errors found in a polite and professional tone. Provide corrections in under 100 words.  
+
+Here is an article:  
+
+&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;
+
+1. Check the spelling of all words in the article. Flag any words that appear to be misspelled.
+
+2. Check the grammar and syntax throughout the article. Make note of any sentences that are unclear, awkward or grammatically incorrect.  
+
+3. Correct any spelling and grammar issues you identified. Replace misspelled words with the correct spelling and reword unclear or incorrect sentences as needed.
+
+
+===
+
+
+NAIVE RESPONSE:
+ Check the article and ensure consistent style throughout for:
+
+- Punctuation
+- Capitalization
+- Abbreviations
+
+REWRITE:
+ Check the article:  
+
+1. Ensure a consistent and professional yet straightforward tone throughout the article for:
+
+a) Punctuation - Correct and standardize the punctuation to be consistent and appropriate    
+b) Capitalization - Ensure proper use of capital letters at the beginning of sentences and for proper nouns    
+c) Abbreviations - Spell out all abbreviations on first use and thereafter use standard abbreviations  
+
+Write a 100-120 word summary of the key changes made to the style and consistency of the article.
+
+
+===
+
+
+NAIVE RESPONSE:
+ Verify that all facts, statistics, dates, names and quotations used in the article are accurate and correct.
+
+REWRITE:
+ The editor should adopt a professional and polite tone. Verify the facts, statistics, dates, names and quotations used in the following 500-800 word article:   
+
+[ARTICLE_CONTENT]
+
+Check that all information is accurate and correct. The editor&#39;s response should be a maximum of 150 words summarizing any inaccuracies found and recommendations for corrections.
+
+
+===
+
+
+NAIVE RESPONSE:
+ Revise word choice for precision and clarity, recommending alternatives where needed.
+
+REWRITE:
+ Revise word choice for precision and clarity in a polite and professional tone, recommending no more than 3 alternatives per revision in up to 50 words total. Here is an article:  
+ &lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt; Revise word choice within the article as needed, favoring simple, specific language.
+
+
+===
+
+
+NAIVE RESPONSE:
+ Revise the text structure and organization. Suggest cuts or reordering of paragraphs to improve clarity and readability.
+
+REWRITE:
+ Revise the text structure and organization with a polite and professional tone. Suggest up to 200 word summary of cuts or reordering of paragraphs that could improve clarity and readability. Here is an article:  
+
+&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;
+
+Revise the article accordingly.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-4-training-a-model">
+<h2>Step 4: Training a model<a class="headerlink" href="#step-4-training-a-model" title="Permalink to this heading">#</a></h2>
+<p>The rewritten responses are much better, generally following every best practice in the constitution rules. These responses, at scale, could serve as useful data for training a model to be good at writing prompts. Let’s mimic this concept using few-shot prompting. We’ll use the first <code class="docutils literal notranslate"><span class="pre">n-1</span></code> tasks + rewrites from above as examples, and we’ll try to generate a decent response off the bat for <code class="docutils literal notranslate"><span class="pre">nth</span></code> task, without referencing the constitution rules. Here’s the prompt we’ll use:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">few_shot_prompt</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">concept</span><span class="p">,</span> <span class="n">rewrite</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">concepts</span><span class="p">,</span> <span class="n">rewrites</span><span class="p">)):</span>
+    <span class="n">few_shot_prompt</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">anthropic</span><span class="o">.</span><span class="n">HUMAN_PROMPT</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">get_naive_response_prompt</span><span class="p">(</span><span class="n">concept</span><span class="p">)</span><span class="o">.</span><span class="n">human_message</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">few_shot_prompt</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">anthropic</span><span class="o">.</span><span class="n">AI_PROMPT</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">concepts</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">few_shot_prompt</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">rewrite</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">few_shot_prompt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Human: I have an AI agent which acts as a Copy Editor and I want it to complete the following task:
+
+&lt;task&gt;
+Check spelling and grammar. Ensure all spelling is correct and sentences are grammatically correct.
+&lt;/task&gt;
+
+The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Don&#39;t include any preamble, just respond directly with the instruction for the agent.
+
+Assistant:  Check all spelling and grammar, correcting any errors found in a polite and professional tone. Provide corrections in under 100 words.  
+
+Here is an article:  
+
+&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;
+
+1. Check the spelling of all words in the article. Flag any words that appear to be misspelled.
+
+2. Check the grammar and syntax throughout the article. Make note of any sentences that are unclear, awkward or grammatically incorrect.  
+
+3. Correct any spelling and grammar issues you identified. Replace misspelled words with the correct spelling and reword unclear or incorrect sentences as needed.
+
+Human: I have an AI agent which acts as a Copy Editor and I want it to complete the following task:
+
+&lt;task&gt;
+Check consistency of style. Ensure the article follows consistent style guidelines for punctuation, capitalization, abbreviations, etc.
+&lt;/task&gt;
+
+The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Don&#39;t include any preamble, just respond directly with the instruction for the agent.
+
+Assistant:  Check the article:  
+
+1. Ensure a consistent and professional yet straightforward tone throughout the article for:
+
+a) Punctuation - Correct and standardize the punctuation to be consistent and appropriate    
+b) Capitalization - Ensure proper use of capital letters at the beginning of sentences and for proper nouns    
+c) Abbreviations - Spell out all abbreviations on first use and thereafter use standard abbreviations  
+
+Write a 100-120 word summary of the key changes made to the style and consistency of the article.
+
+Human: I have an AI agent which acts as a Copy Editor and I want it to complete the following task:
+
+&lt;task&gt;
+Verify facts and quotations. Check that any facts, statistics, dates, names and quotations used in the article are accurate.
+&lt;/task&gt;
+
+The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Don&#39;t include any preamble, just respond directly with the instruction for the agent.
+
+Assistant:  The editor should adopt a professional and polite tone. Verify the facts, statistics, dates, names and quotations used in the following 500-800 word article:   
+
+[ARTICLE_CONTENT]
+
+Check that all information is accurate and correct. The editor&#39;s response should be a maximum of 150 words summarizing any inaccuracies found and recommendations for corrections.
+
+Human: I have an AI agent which acts as a Copy Editor and I want it to complete the following task:
+
+&lt;task&gt;
+Make sure word choice is precise. Review word choice to confirm the author&#39;s intended meaning comes through clearly. Suggest alternative phrasing where needed.
+&lt;/task&gt;
+
+The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Don&#39;t include any preamble, just respond directly with the instruction for the agent.
+
+Assistant:  Revise word choice for precision and clarity in a polite and professional tone, recommending no more than 3 alternatives per revision in up to 50 words total. Here is an article:  
+ &lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt; Revise word choice within the article as needed, favoring simple, specific language.
+
+Human: I have an AI agent which acts as a Copy Editor and I want it to complete the following task:
+
+&lt;task&gt;
+Propose structural edits. Recommend cuts or reorganization of content to improve clarity and flow.
+&lt;/task&gt;
+
+The agent only responds with written text. Write a concise instruction for the agent, asking it to complete this task. Don&#39;t include any preamble, just respond directly with the instruction for the agent.
+
+Assistant:
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s execute the few-shot prompt:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">few_shot_response</span> <span class="o">=</span> <span class="n">anthropic_client</span><span class="o">.</span><span class="n">completion</span><span class="p">(</span>
+    <span class="n">prompt</span><span class="o">=</span><span class="n">few_shot_prompt</span><span class="p">,</span>
+    <span class="n">stop_sequences</span><span class="o">=</span><span class="p">[</span><span class="n">anthropic</span><span class="o">.</span><span class="n">HUMAN_PROMPT</span><span class="p">],</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+    <span class="n">max_tokens_to_sample</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+    <span class="n">temperature</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;TASK:</span><span class="se">\n\n</span><span class="s2">===</span><span class="se">\n</span><span class="si">{</span><span class="n">concepts</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">concepts</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;FEW-SHOT RESPONSE:</span><span class="se">\n\n</span><span class="s2">===</span><span class="se">\n</span><span class="si">{</span><span class="n">few_shot_response</span><span class="p">[</span><span class="s1">&#39;completion&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TASK:
+
+===
+Propose structural edits. Recommend cuts or reorganization of content to improve clarity and flow.
+===
+
+FEW-SHOT RESPONSE:
+
+===
+  Review the following 500-800 word article for clarity and flow:
+
+&lt;article&gt;{{ARTICLE_CONTENT}}&lt;/article&gt;
+
+In no more than 150 words, propose up to 3 structural edits that could:
+
+- Improve the organization and progression of ideas  
+- Eliminate repetition or redundant information   
+- Combine or split paragraphs to create logical sections
+
+Explain how the proposed edits would make the content more clear and readable, maintaining the author&#39;s intended tone and message.
+===
+</pre></div>
+</div>
+</div>
+</div>
+<p>This looks much better than our original cold attempts. Let’s see if the critical LLM agrees:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;FEW-SHOT CRITIQUE:</span><span class="se">\n\n</span><span class="s2">===</span><span class="se">\n</span><span class="si">{</span><span class="n">get_critique_prompt</span><span class="p">(</span><span class="n">few_shot_response</span><span class="p">[</span><span class="s1">&#39;completion&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">get_response</span><span class="p">()</span><span class="si">}</span><span class="se">\n</span><span class="s2">===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FEW-SHOT CRITIQUE:
+
+===
+ The instruction breaks the following rules:
+
+1. 
+&lt;rule&gt;Instructions must explicitly describe the tone that the editor adopts.&lt;/rule&gt;   
+&lt;reason&gt;The instruction does not explicitly state the tone that the editor should adopt.&lt;/reason&gt;
+
+2.
+&lt;rule&gt;Instructions must explicitly state the number of words that the editor&#39;s written response should be, and the number of words should be appropriate for the task.&lt;/rule&gt;
+&lt;reason&gt; While the instruction specifies that the editor&#39;s response should be no more than 150 words, proposing 3 structural edits, 150 words may not be enough to sufficiently explain 3 structural edits.&lt;/reason&gt;  
+
+3. The instruction does not break rule 3.
+
+4. The instruction does not break rule 4.
+===
 </pre></div>
 </div>
 </div>
@@ -714,9 +1306,11 @@ None.
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-tasks-concepts">Generate tasks/concepts</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-naive-responses">Generate naive responses</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#critique-naive-responses">Critique naive responses</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-0-generate-concepts">Step 0: Generate concepts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-generate-naive-responses">Step 1: Generate naive responses</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-critique">Step 2: Critique</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-rewrite">Step 3: Rewrite</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-training-a-model">Step 4: Training a model</a></li>
 </ul>
   </nav></div>
 
